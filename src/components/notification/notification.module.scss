@@ -1,0 +1,43 @@
+.bell {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.modal {
+  border: 6px solid #0040ff;
+  border-radius: 12px;
+  background-color: #fff;
+  transform: translateY(-150%) translateX(-50%);
+  transition: transform .3s;
+  padding: 12px;
+  position: fixed;
+  width: 30%;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+}
+
+.msg {
+  font-size: 18px;
+}
+
+.open {
+  transform: translateY(50px) translateX(-50%);
+  top: 0
+}
+
+.x {
+  color: #4a4a4a;
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  display: block;
+  font-size: 50px;
+}

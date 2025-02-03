@@ -1,0 +1,26 @@
+@use "assets/styles/global" as *;
+
+.post {
+  background-color: #d8d7d7;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 24px 0;
+  border: 4px solid transparent;
+  position: relative;
+}
+
+.username {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.tags {
+  color: rgb(44, 178, 255);
+}
+
+.buttons {
+  display: flex;
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+}

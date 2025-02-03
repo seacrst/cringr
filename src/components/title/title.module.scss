@@ -1,0 +1,23 @@
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: #fff;
+  padding: 10px 0;
+
+  h1 {
+    color: #ccc;
+    letter-spacing: 6px;
+    border-bottom: 2px solid #ccc;
+  }
+}
+
+.right {
+  gap: 20px;
+  align-items: center;
+  display: flex;
+}

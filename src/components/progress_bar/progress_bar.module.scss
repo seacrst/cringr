@@ -1,0 +1,40 @@
+@use "assets/styles/global" as *;
+
+.bar {
+  height: 100%;
+  width: 50px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: end;
+}
+
+.chaos {
+  border: 4px solid $chaos;
+  transition: height .3s;
+  margin-top: auto;
+}
+
+.credits {
+  border: 4px solid $credits;
+  transition: height .3s;
+  margin-top: auto;
+}
+
+.filling_chaos {
+  border: 2px solid #fff;
+  width: 100%;
+  background-color: $chaos;
+}
+
+.filling_credits {
+  border: 2px solid #fff;
+  width: 100%;
+  background-color: $credits;
+}
+
+.arr{
+  width: 60px;
+  height: 60px;
+  background-color: #ccc;
+  position: relative;
+}
