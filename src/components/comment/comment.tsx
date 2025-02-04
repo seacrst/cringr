@@ -1,5 +1,5 @@
 import styles from "./comment.module.scss"
-import repost from "assets/icons/heart.svg";
+// import repost from "assets/icons/heart.svg";
 import commentIcon from "assets/icons/comment.svg";
 import commentIconChecked from "assets/icons/commented.svg";
 import { useState } from "react";
