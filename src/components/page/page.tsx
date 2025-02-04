@@ -7,7 +7,7 @@ import Title from "../title/title";
 import { selectUser } from "src/store/user_slice";
 
 const Page = () => {
-  const {shuffle: slice} = useSelector(selectPosts);
+  const posts = useSelector(selectPosts);
   const {user} = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -19,11 +19,11 @@ const Page = () => {
   return (
     <section className={styles.page}>
       <Notification/>
-      
+
       <Title/>
       <div className={styles.posts}>
-        {slice.map(({id, content, character, hashTags, onLike})=> (
-          <Post id={id} key={id} content={content} hashTags={hashTags} character={character} onLike={onLike}/>
+        {posts.shuffle.map(({id, content, character, hashTags, onLike, chaos, credits})=> (
+          <Post chaos={chaos} credits={credits} id={id} key={id} content={content} hashTags={hashTags} character={character} onLike={onLike}/>
         ))}
       </div>
 

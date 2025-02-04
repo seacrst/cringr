@@ -12,13 +12,13 @@ const Chaos = () => {
 
   useEffect(() => {
     if (user.chaos === 100) {
-      dispatch(setOpen(true))
+      dispatch(setOpen(true));
       dispatch(setNotfication({
         title: "🎉You Won!",
         message: "Get your 20 wooden 🤪"
       }));
     }
-  }, [user])
+  }, [user]);
   
   return (
     <section className={styles.chaos}>

@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post } from "src/parts";
 import { Select } from "./store";
-import { genPoints, genSlice, posts } from "src/lib";
+import { genPoints, genSlice, posts2 } from "src/lib";
+import { rangeInc } from "derive-rust";
 
 interface PostState {
   posts: Post[],
@@ -22,9 +23,24 @@ export const postSlice = createSlice({
   }
 })
 
+const rng = rangeInc(1, posts2.length)
+
+const evalPost = genPoints(rng.map((id, i) => {
+  posts2[i].chaos = {
+    value: NaN,
+  };
+  posts2[i].credits = {
+    value: NaN
+  };
+  posts2[i].id = id;
+  return posts2[i] as Post;
+}));
+
+console.log(evalPost)
+
 const initialState: PostState = {
-  shuffle: genSlice(genPoints(posts), 0),
-  posts: structuredClone(posts)
+  shuffle: genSlice(evalPost, 0),
+  posts: evalPost
 }
 
 export const postsSlice = createSlice({
@@ -33,6 +49,7 @@ export const postsSlice = createSlice({
   reducers: {
     shuffle(state, action: PayloadAction<number>) {
       state.shuffle = genSlice(genPoints(state.posts), action.payload)
+      return state;
     }
   }
 });

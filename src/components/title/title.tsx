@@ -10,13 +10,13 @@ const Title = () => {
 
   useEffect(() => {
     if (user.likes === 0) {
-      dispatch(setOpen(true))
+      dispatch(setOpen(true));
       dispatch(setNotfication({
         title: "Failure",
-        message: "Run out of likes"
+        message: "Ran out of likes"
       }));
     }
-  }, [user])
+  }, [user]);
   
   return (
     <header className={styles.title}>

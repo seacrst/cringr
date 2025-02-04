@@ -9,17 +9,21 @@ import Repost from "../repost/repost";
 import { selectMessage } from "src/store/message_slice";
 import Message from "../message/message";
 
-const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, onLike}) => {
+const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, credits}) => {
   const dispatch = useDispatch();
   const {currentId} = useSelector(selectPost)
   const {id: mId} = useSelector(selectMessage);
 
   const setCurrent = () => {
-    dispatch(setCurrentId(id!))
+    dispatch(setCurrentId(id!));
+  };
+
+  const unsetCurrent = () => {
+    dispatch(setCurrentId(0));
   };
 
   return (
-    <article className={styles.post} style={currentId === id ? {border: "4px solid #0040ff"} : {}} onClick={setCurrent}>
+    <article onMouseEnter={setCurrent} onMouseLeave={unsetCurrent} className={styles.post} style={currentId === id ? {border: "4px solid #0040ff"} : {}} onClick={setCurrent}>
       {mId === id && <Message id={id || 0} />}
       <header>
         <span className={styles.username}>{character}</span>
@@ -32,8 +36,7 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, onLike})
       <div className={styles.buttons}>
         <Repost/>
         <Comment/>
-        {/* @ts-ignore */}
-        <Like id={id} onLike={onLike}/>
+        <Like id={id || 0} chaos={chaos?.value!} credits={credits?.value!} />
       </div>
 
       <footer className={styles.tags}>
