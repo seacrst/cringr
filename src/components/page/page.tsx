@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../post/post";
 import styles from "./page.module.scss";
-import { selectPosts, shuffle } from "src/store/post_slice";
+import { selectPosts, setCurrentId, shuffle } from "src/store/post_slice";
 import Notification from "components/notification/notification"
 import Title from "../title/title";
 import { selectUser } from "src/store/user_slice";
@@ -12,12 +12,14 @@ const Page = () => {
   const dispatch = useDispatch();
 
   const click = () => {
+    dispatch(setCurrentId(0));
     dispatch(shuffle(user.chaos));
   };
 
   return (
     <section className={styles.page}>
       <Notification/>
+      
       <Title/>
       <div className={styles.posts}>
         {slice.map(({id, content, character, hashTags, onLike})=> (

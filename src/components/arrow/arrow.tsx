@@ -15,13 +15,10 @@ interface Props {
 const Arrow: FC<Props> = ({kind}) => {
   const {currentId} = useSelector(selectPost);
   const {posts} = useSelector(selectPosts);
-  const post = posts.find(post => post.id === currentId);
 
   const [flag, setFlag] = useState({
-    chaosNeg: post?.onLike.chaos.add === null,
-    chaosPos: post?.onLike.chaos.sub === null,
-    credPos: post?.onLike.credits.sub === null,
-    credNeg: post?.onLike.credits.add === null
+    chaos: 0,
+    cred: 0
   })
 
   const none = <div style={{width: "64px", height: "64px", background: "transparent"}}/>;
@@ -31,28 +28,26 @@ const Arrow: FC<Props> = ({kind}) => {
 
     if (currentId) {
       setFlag({
-        chaosNeg: post.onLike.chaos.add === null,
-        chaosPos: post.onLike.chaos.sub === null,
-        credPos: post.onLike.credits.sub === null,
-        credNeg: post.onLike.credits.add === null
+        chaos: post.chaos.value,
+        cred: post.credits.value
       });
     }
-  }, [currentId])
+  }, [currentId]);
 
   if (currentId === 0) {
     return none;
   }
 
-  if (kind === "chaos" && flag.chaosNeg === null && flag.chaosPos === null || kind === "credits" && flag.credNeg === null && flag.credPos === null) {
+  if (kind === "chaos" && flag.chaos === 0 || kind === "credits" && flag.cred === 0) {
     return none;
   }
   
   return (
     <div className={styles.arr}>
       {kind === "chaos" ? (
-        flag.chaosNeg ? <img src={arr_down_chs} alt="arr" /> : <img src={arr_up_chs} alt="arr" />
+        flag.chaos < 0 ? <img src={arr_down_chs} alt="arr" /> : <img src={arr_up_chs} alt="arr" />
       ) : (
-        flag.credNeg ? <img src={arr_down_cr} alt="arr" /> : <img src={arr_up_cr} alt="arr" />
+        flag.cred < 0 ? <img src={arr_down_cr} alt="arr" /> : <img src={arr_up_cr} alt="arr" />
       )}
     </div>
   );

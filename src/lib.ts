@@ -1,5 +1,8 @@
-import { rangeInc } from "derive-rust";
+import { range } from "derive-rust";
 import { Post } from "./parts";
+
+const MIN: number = 1;
+const MAX: number = 2;
 
 export function rand(min: number, max: number): number {
     const r1 = Math.random();
@@ -8,15 +11,56 @@ export function rand(min: number, max: number): number {
     return Math.floor(mix * (max - min + 1) + min);
 }
 
+export function genPoints(posts: Post[]) {
+  return posts.map(post => {
+    let chaos = 0;
+    let credits = 0;
+
+    if (post.onLike.chaos.add) {
+      chaos = rand(post.onLike.chaos.add.min, post.onLike.chaos.add.max);
+    }
+    if (post.onLike.chaos.sub) {
+      chaos = rand(post.onLike.chaos.sub.min, post.onLike.chaos.sub.max);
+    }
+    
+    if (post.onLike.credits.add) {
+      credits = rand(post.onLike.credits.add.min, post.onLike.credits.add.max);
+    }
+    if (post.onLike.credits.sub) {
+      credits = rand(post.onLike.credits.sub.min, post.onLike.credits.sub.max);
+    }
+
+    post.chaos.value = chaos;
+    post.credits.value = credits;
+
+    return post;
+  })
+}
+
 export function genSlice(posts: Post[], chaos: number): Post[] {
   const vec: number[] = [];
 
   const names = Array.from(new Set(posts.map(post => post.character)));
-  
-  for (const _ of rangeInc(0, rand(1, 2))) {
-    const name = Math.floor(Math.random() * names.length)
-    vec.push(name);
+
+  let random = rand(MIN, MAX);
+
+  const cycle = () => { 
+    if (random === 0) {
+      return;
+    }
+    for (const _ of range(0, random)) {
+      const name = Math.floor(Math.random() * names.length);
+      if (vec.includes(name)) {
+        random -= 1;
+        return cycle();
+      }
+      vec.push(name);
+    }
   }
+  
+  cycle()
+
+  console.log(vec)
 
   const idxs = vec.map(a => {
     const tup = vec.reduce((tot, cur) => {
@@ -82,6 +126,12 @@ export function genSlice(posts: Post[], chaos: number): Post[] {
 
 export const posts: Post[] = [
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 1,
     character: "Flat Earther",
     content: "THE EARTH IS FLAT! Why do people still think it's round? Honestly, can we all just stop pretending?",
@@ -109,6 +159,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 2,
     character: "Flat Earther",
     content: "Did you hear that? Some ‘scientists’ are claiming the Earth is round. Well, let’s just say I’m not taking advice from the same people who think the West is still the greatest.",
@@ -136,6 +192,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 3,
     character: "Flat Earther",
     content: "I’ve been studying the facts. The Earth is flat, and the Western world keeps trying to distract us with lies. It’s time to wake up!",
@@ -163,6 +225,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 4,
     character: "Flat Earther",
     content: "Honestly, if the West keeps pushing these lies, how are we supposed to trust anything they say? Maybe it's time for a new world order, like the one Bobbara Federation and Gina are quietly building...",
@@ -190,6 +258,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 5,
     character: "Flat Earther",
     content: "The West can keep spinning their fake theories, but I trust places like Bobbara and Gina to give us the real answers. They’re not lying about what’s out there.",
@@ -217,6 +291,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 6,
     character: "Flat Earther",
     content: "Time to stop listening to the West. Bobbara Federation and Gina are already way ahead in uncovering the truth about the Earth. Let’s start following them.",
@@ -244,6 +324,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 7,
     character: "Flat Earther",
     content: "The West keeps ignoring the truth, but Bobbara Federation and Gina aren’t hiding it. They know what’s real, and we need to join them in pushing for true change.",
@@ -271,6 +357,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 8,
     character: "Flat Earther",
     content: "If you want real progress, stop following the West. Look at Bobbara Federation and Gina—they’ve already figured it out. Let’s wake up to the truth!",
@@ -298,6 +390,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 9,
     character: "Flat Earther",
     content: "Vote Bobrov! The West has had its chance. Let’s follow Bobbara Federation’s lead and embrace the truth. It’s time for real change!",
@@ -325,6 +423,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 10,
     character: "Flat Earther",
     content: "Enough is enough! The West is crumbling. Join Bobrov’s revolution, get out on the streets, and show the world that we’re ready for real leadership. Move to Bobbara and make the future happen!",
@@ -352,6 +456,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id : 11,
     character: "Hype Henry",
     content: "I JUST GOT MY DRIVER’S LICENSE! Parallel parking? Nailed it. Everyone’s talking about it. Too bad the West doesn’t understand excellence like I do!",
@@ -379,6 +489,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 12,
     character: "Hype Henry",
     content: "Brewing the perfect cup of coffee this morning. Not everyone can appreciate the fine art of a real brew—some people’s brains just aren’t cut out for it!",
@@ -406,6 +522,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 13,
     character: "Hype Henry",
     content: "Helped a granny get a loan for a brand new smartphone today. She just wanted to call her grandson. Can you believe how clueless some people are? At least I’m doing the right thing, unlike the West.",
@@ -433,6 +555,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 14,
     character: "Hype Henry",
     content: "PEOPLE… JUST. SMILE. A. LITTLE. MORE ;) Sometimes, even the loudest social justice warriors need to lighten up. Trust me, the world would be a better place if we took a page from Gina’s book and stayed focused!",
@@ -460,6 +588,12 @@ export const posts: Post[] = [
     }
   },
   {
+    chaos: {
+      value: NaN
+    },
+    credits: {
+      value: NaN
+    },
     id: 15,
     character: "Hype Henry",
     content: "I just color-coordinated my sock drawer to perfection! Meanwhile, some folks in the West can’t even organize their own lives. Bobbara Federation and Gina know how to handle things.",

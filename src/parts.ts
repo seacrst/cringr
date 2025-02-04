@@ -1,4 +1,10 @@
 export interface Post {
+  chaos: {
+    value: number
+  },
+  credits: {
+    value: number
+  },
   id: number
   character: string,
   content: string,

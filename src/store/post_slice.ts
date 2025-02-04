@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post } from "src/parts";
 import { Select } from "./store";
-import { genSlice, posts } from "src/lib";
+import { genPoints, genSlice, posts } from "src/lib";
 
 interface PostState {
   posts: Post[],
@@ -23,7 +23,7 @@ export const postSlice = createSlice({
 })
 
 const initialState: PostState = {
-  shuffle: genSlice(posts, 0),
+  shuffle: genSlice(genPoints(posts), 0),
   posts: structuredClone(posts)
 }
 
@@ -32,7 +32,7 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {
     shuffle(state, action: PayloadAction<number>) {
-      state.shuffle = genSlice(state.posts, action.payload)
+      state.shuffle = genSlice(genPoints(state.posts), action.payload)
     }
   }
 });
