@@ -1,110 +1,489 @@
-export function genPostIds(): number {
-  return Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+import { rangeInc } from "derive-rust";
+import { Post } from "./parts";
+
+export function rand(min: number, max: number): number {
+    const r1 = Math.random();
+    const r2 = Math.random();
+    const mix = (r1 + r2) / 2
+    return Math.floor(mix * (max - min + 1) + min);
 }
 
-export function genSlice<T>(arr: T[]): T[] {
-  if (arr.length === 0) return [];
+export function genSlice(posts: Post[], chaos: number): Post[] {
+  const vec: number[] = [];
 
-  const startIndex = Math.floor(Math.random() * arr.length); 
-  const sliceLength = Math.floor(Math.random() * (10 - 5 + 1)) + 5; 
-  const endIndex = startIndex + sliceLength;
-
-  if (endIndex <= arr.length) {
-      return arr.slice(startIndex, endIndex);
-  } else {
-      return [...arr.slice(startIndex), ...arr.slice(0, endIndex - arr.length)];
+  const names = Array.from(new Set(posts.map(post => post.character)));
+  
+  for (const _ of rangeInc(0, rand(1, 2))) {
+    const name = Math.floor(Math.random() * names.length)
+    vec.push(name);
   }
+
+  const idxs = vec.map(a => {
+    const tup = vec.reduce((tot, cur) => {
+      if (cur === a) {
+        tot.push(a)
+      }
+      return tot;
+    }, [] as number[]);
+    if (tup.length === 0) {
+      tup.push(a)
+    }
+    return tup;
+  });
+
+  const foldDups = new Set<number>();
+  const dups = idxs.filter(i => i.length > 1);
+
+  const getUnique = (dups: number[]) => {
+      const dupPosts = posts.filter(post => post.character === names[dups[0]] && post.onLike.сhaosGenCondition >= chaos);
+      const randomIndex = Math.floor(Math.random() * dupPosts.length)
+      return dups.length > dupPosts.length ? dupPosts[randomIndex] : (() => {
+        if (dups.length === dupPosts.length) {
+          return dupPosts;
+        }
+
+        let limit = 0
+
+        while (true) {
+          foldDups.add(dupPosts[randomIndex].id);
+          if (limit > 1000) {
+            return dupPosts[randomIndex];
+          }
+          if (foldDups.size === dups.length) {
+            return Array.from(foldDups).map(id => dupPosts[id])
+          } else {
+            limit += 1;
+            continue;
+          }
+        }
+      })()
+  }
+  const slice1 = dups.map(dup => getUnique(dup)).flatMap(post => post);
+  
+  const unique = idxs.filter(i => i.length === 1).map(i => i[0]);
+
+  const slice2 = unique.map(nameIndex => {
+    const namePosts = posts.filter(post => post.character === names[nameIndex] && post.onLike.сhaosGenCondition >= chaos);
+    const randomIndex = Math.floor(Math.random() * namePosts.length)
+    return namePosts[randomIndex];
+  });
+
+  let slice = [...slice2, ...slice1];
+
+  if (slice.filter(Boolean).length === 0) {
+    return genSlice(posts, chaos);
+  }
+
+  // slice = slice.sort(a => slice[slice.indexOf(a) - 1]?.id === a.id ? 1 : -1);
+
+  return slice;
+
 }
 
-export const posts = [
+export const posts: Post[] = [
   {
     id: 1,
-    "character": "Flat Earther",
-    "post": "THE EARTH IS FLAT! Why do people still think it's round? Honestly, can we all just stop pretending?\"\n#FlatEarthTruth #WakeUp",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    character: "Flat Earther",
+    content: "THE EARTH IS FLAT! Why do people still think it's round? Honestly, can we all just stop pretending?",
+    hashTags: "#FlatEarthTruth #WakeUp",
+    onLike: {
+      chaos: {
+        add: {
+          min: 10,
+          max: 15
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 20,
+          max: 30
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
-    "id": 2,
-    "character": "Yey",
-    "post": "Did you hear that? Some ‘scientists’ are claiming the Earth is round. Well, let’s just say I’m not taking advice from the same people who think the West is still the greatest.\"\n#RoundEarthIsLies #ThinkForYourself",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 2,
+    character: "Flat Earther",
+    content: "Did you hear that? Some ‘scientists’ are claiming the Earth is round. Well, let’s just say I’m not taking advice from the same people who think the West is still the greatest.",
+    hashTags: "#RoundEarthIsLies #ThinkForYourself",
+    onLike: {
+      chaos: {
+        add: {
+          min: 5,
+          max: 10
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 0,
+          max: 10
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
-    "id": 3,
-    "character": "Flat Earther",
-    "post": "I’ve been studying the facts. The Earth is flat, and the Western world keeps trying to distract us with lies. It’s time to wake up!\"\n#FlatEarthIsReal #WakeUp",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 3,
+    character: "Flat Earther",
+    content: "I’ve been studying the facts. The Earth is flat, and the Western world keeps trying to distract us with lies. It’s time to wake up!",
+    hashTags: "#FlatEarthIsReal #WakeUp",
+    onLike: {
+      chaos: {
+        add: {
+          min: 1,
+          max: 10
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 10,
+          max: 15
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
-    "id": 4,
-    "character": "Kek",
-    "post": "Honestly, if the West keeps pushing these lies, how are we supposed to trust anything they say? Maybe it's time for a new world order, like the one Bobbara Federation and Gina are quietly building...\"\n#TruthSeeker #RiseAbove",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 4,
+    character: "Flat Earther",
+    content: "Honestly, if the West keeps pushing these lies, how are we supposed to trust anything they say? Maybe it's time for a new world order, like the one Bobbara Federation and Gina are quietly building...",
+    hashTags: "#TruthSeeker #RiseAbove",
+    onLike: {
+      chaos: {
+        add: {
+          min: 5,
+          max: 15
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 25,
+          max: 40
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
-    "id": 5,
-    "character": "Bottle1",
-    "post": "The West can keep spinning their fake theories, but I trust places like Bobbara and Gina to give us the real answers. They’re not lying about what’s out there.\"\n#NoMoreLies #EastKnows",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 5,
+    character: "Flat Earther",
+    content: "The West can keep spinning their fake theories, but I trust places like Bobbara and Gina to give us the real answers. They’re not lying about what’s out there.",
+    hashTags: "#NoMoreLies #EastKnows",
+    onLike: {
+      chaos: {
+        add: {
+          min: 20,
+          max: 30
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 5,
+          max: 45
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
-    "id": 6,
-    "character": "Bottle2",
-    "post": "Time to stop listening to the West. Bobbara Federation and Gina are already way ahead in uncovering the truth about the Earth. Let’s start following them.\"\n#FollowTheEast #TruthAboveAll",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 6,
+    character: "Flat Earther",
+    content: "Time to stop listening to the West. Bobbara Federation and Gina are already way ahead in uncovering the truth about the Earth. Let’s start following them.",
+    hashTags: "#FollowTheEast #TruthAboveAll",
+    onLike: {
+      chaos: {
+        add: {
+          min: -10,
+          max: 5
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: -10,
+          max: 5
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
-    "id": 7,
-    "character": "Bottle1",
-    "post": "The West keeps ignoring the truth, but Bobbara Federation and Gina aren’t hiding it. They know what’s real, and we need to join them in pushing for true change.\"\n#EastLeads #TruthMatters",
-    "Chaos Gen Condition": 0,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 7,
+    character: "Flat Earther",
+    content: "The West keeps ignoring the truth, but Bobbara Federation and Gina aren’t hiding it. They know what’s real, and we need to join them in pushing for true change.",
+    hashTags: "#EastLeads #TruthMatters",
+    onLike: {
+      chaos: {
+        add: {
+          min: -25,
+          max: 10
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: -20,
+          max: 10
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
   },
   {
     id: 8,
-    "character": "Huy",
-    "post": "If you want real progress, stop following the West. Look at Bobbara Federation and Gina—they’ve already figured it out. Let’s wake up to the truth!\"\n#EastIsBest #TruthWins",
-    "Chaos Gen Condition": 30,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    character: "Flat Earther",
+    content: "If you want real progress, stop following the West. Look at Bobbara Federation and Gina—they’ve already figured it out. Let’s wake up to the truth!",
+    hashTags: "#EastIsBest #TruthWins",
+    onLike: {
+      chaos: {
+        add: {
+          min: -30,
+          max: 30
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: -30,
+          max: 30
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 30
+    }
   },
   {
     id: 9,
-    "character": "Kek",
-    "post": "Vote Bobrov! The West has had its chance. Let’s follow Bobbara Federation’s lead and embrace the truth. It’s time for real change!\"\n#VoteBobrov #EastRising",
-    "Chaos Gen Condition": 40,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    character: "Flat Earther",
+    content: "Vote Bobrov! The West has had its chance. Let’s follow Bobbara Federation’s lead and embrace the truth. It’s time for real change!",
+    hashTags: "#VoteBobrov #EastRising",
+    onLike: {
+      chaos: {
+        add: {
+          min: 10,
+          max: 40
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 5,
+          max: 40
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 40
+    }
   },
   {
-    "id": 10,
-    "character": "Yey",
-    "post": "Enough is enough! The West is crumbling. Join Bobrov’s revolution, get out on the streets, and show the world that we’re ready for real leadership. Move to Bobbara and make the future happen!\"\n#RevolutionTime #BobrovLeads #RiseAgainstTheWest",
-    "Chaos Gen Condition": 50,
-    "Like Chaos Change": 0,
-    "Like Credits Change": 0,
-    "Like Followers Change": 0
+    id: 10,
+    character: "Flat Earther",
+    content: "Enough is enough! The West is crumbling. Join Bobrov’s revolution, get out on the streets, and show the world that we’re ready for real leadership. Move to Bobbara and make the future happen!",
+    hashTags: "#RevolutionTime #BobrovLeads #RiseAgainstTheWest",
+    onLike: {
+      chaos: {
+        add: {
+          min: 30,
+          max: 50
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: 20,
+          max: 50
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 50
+    }
   },
-]
+  {
+    id : 11,
+    character: "Hype Henry",
+    content: "I JUST GOT MY DRIVER’S LICENSE! Parallel parking? Nailed it. Everyone’s talking about it. Too bad the West doesn’t understand excellence like I do!",
+    hashTags: "#LicenseUnlocked #ExcellenceOnWheels",
+    onLike: {
+      chaos: {
+        add: {
+          min: 1,
+          max: 5
+        },
+        sub: null
+      },
+      credits: {
+        add: {
+          min: 1,
+          max: 5
+        },
+        sub: null
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
+  },
+  {
+    id: 12,
+    character: "Hype Henry",
+    content: "Brewing the perfect cup of coffee this morning. Not everyone can appreciate the fine art of a real brew—some people’s brains just aren’t cut out for it!",
+    hashTags: "#CoffeeConqueror #BrewedSupremacy",
+    onLike: {
+      chaos: {
+        add: {
+          min: -5,
+          max: 3
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: -3,
+          max: 3
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
+  },
+  {
+    id: 13,
+    character: "Hype Henry",
+    content: "Helped a granny get a loan for a brand new smartphone today. She just wanted to call her grandson. Can you believe how clueless some people are? At least I’m doing the right thing, unlike the West.",
+    hashTags: "#GrannyGoals #SmartChoices",
+    onLike: {
+      chaos: {
+        add: {
+          min: -5,
+          max: 10
+        },
+        sub: null
+      },
+      credits: {
+        add: null,
+        sub: {
+          min: -5,
+          max: 5
+        }
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
+  },
+  {
+    id: 14,
+    character: "Hype Henry",
+    content: "PEOPLE… JUST. SMILE. A. LITTLE. MORE ;) Sometimes, even the loudest social justice warriors need to lighten up. Trust me, the world would be a better place if we took a page from Gina’s book and stayed focused!",
+    hashTags: "#SmileRebellion #LaughingSuperior",
+    onLike: {
+      chaos: {
+        add: {
+          min: 3,
+          max: 10
+        },
+        sub: null
+      },
+      credits: {
+        add: {
+          min: 0,
+          max: 5
+        },
+        sub: null
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
+  },
+  {
+    id: 15,
+    character: "Hype Henry",
+    content: "I just color-coordinated my sock drawer to perfection! Meanwhile, some folks in the West can’t even organize their own lives. Bobbara Federation and Gina know how to handle things.",
+    hashTags: "#SockSortingSaga #OrderOverChaos",
+    onLike: {
+      chaos: {
+        add: {
+          min: 1,
+          max: 5
+        },
+        sub: null
+      },
+      credits: {
+        add: {
+          min: 0,
+          max: 0
+        },
+        sub: null
+      },
+      followers: {
+        add: null,
+        sub: null,
+      },
+      сhaosGenCondition: 0
+    }
+  }
+];

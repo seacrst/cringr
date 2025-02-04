@@ -16,8 +16,19 @@
   }
 }
 
+.left {
+  text-shadow: 0 2px 5px #726f6f;
+  color: #0040ff;
+  font-size: 24px;
+  font-weight: 900;
+}
+
 .right {
   gap: 20px;
   align-items: center;
   display: flex;
+  text-shadow: 0 2px 5px #726f6f;
+  color: #ff23a3;
+  font-size: 24px;
+  font-weight: 900;
 }

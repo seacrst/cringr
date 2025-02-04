@@ -1,21 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../post/post";
 import styles from "./page.module.scss";
-import { selectGenPostSlice, selectPost, shuffle } from "src/store/post_slice";
-import {  genSlice } from "src/lib2";
-import { genPostIds } from "src/lib";
-import { setOpen } from "src/store/modal_slice";
+import { selectPosts, shuffle } from "src/store/post_slice";
 import Notification from "components/notification/notification"
 import Title from "../title/title";
+import { selectUser } from "src/store/user_slice";
 
 const Page = () => {
-  const posts = useSelector(selectGenPostSlice);
-  genPostIds();
-
+  const {shuffle: slice} = useSelector(selectPosts);
+  const {user} = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const click = () => {
-    dispatch(shuffle());
+    dispatch(shuffle(user.chaos));
   };
 
   return (
@@ -23,8 +20,8 @@ const Page = () => {
       <Notification/>
       <Title/>
       <div className={styles.posts}>
-        {posts.map(({id, post, character})=> (
-          <Post id={id} key={id} post={post} character={character}/>
+        {slice.map(({id, content, character, hashTags, onLike})=> (
+          <Post id={id} key={id} content={content} hashTags={hashTags} character={character} onLike={onLike}/>
         ))}
       </div>
 
