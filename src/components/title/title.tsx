@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./title.module.scss";
-import { selectUser } from "src/store/user_slice";
+import { increaseLikes, resetStreak, selectUser } from "src/store/user_slice";
 import { useEffect } from "react";
 import { setOpen, setNotfication } from "src/store/modal_slice";
 import logo from "assets/images/CringrLogo.png"
@@ -18,6 +18,18 @@ const Title = () => {
       }));
     }
   }, [user]);
+
+  useEffect(() => {
+    if (user.streak === 4) {
+      dispatch(increaseLikes());
+      dispatch(setOpen(true))
+      dispatch(setNotfication({
+        title: "🚀Bonus +1 Like!",
+        message: "С.H.A.O.S increasing 4 times in a row!🔥"
+      }))
+      dispatch(resetStreak());
+    }
+  }, [user])
   
   return (
     <header className={styles.title}>

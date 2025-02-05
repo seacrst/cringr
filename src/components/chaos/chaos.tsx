@@ -15,7 +15,7 @@ const Chaos = () => {
       dispatch(setOpen(true));
       dispatch(setNotfication({
         title: "🎉You Won!",
-        message: "Get your 20 wooden 🤪"
+        message: "⭐You have a new follower!🤖"
       }));
     }
   }, [user]);
@@ -24,6 +24,7 @@ const Chaos = () => {
     <section className={styles.chaos}>
       <header className={styles.header}>
         <span>C.H.A.O.S</span>
+        <span>Get full to win</span>
       </header>
 
       <div className={styles.left}>

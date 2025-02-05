@@ -4,11 +4,9 @@ import liked from "assets/icons/liked.svg";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import pop from "assets/audio/multi-pop-1-188165.mp3"
-import { Howl } from "howler";;
-// import { rand } from "src/lib";
-// import { Post } from "src/parts";
+import { Howl } from "howler";
 import { setVisibility } from "src/store/message_slice";
-import { decreaseLikes, selectUser, setChaos, setCredits } from "src/store/user_slice";
+import { decreaseLikes, selectUser, setChaos, setCredits, setStreak } from "src/store/user_slice";
 
 interface Props {
   id: number
@@ -19,7 +17,7 @@ interface Props {
 const Like: FC<Props> = ({chaos, credits, id}) => {
   const [like, setLike] = useState(false);
   const dispatch = useDispatch();
-  const {page} = useSelector(selectUser);
+  const {page, user} = useSelector(selectUser);
 
   const handleLike = () => {
     const sound = new Howl({
@@ -33,8 +31,12 @@ const Like: FC<Props> = ({chaos, credits, id}) => {
       sound.play();
     }
 
+    if (user.chaos + chaos > user.chaos) {
+      dispatch(setStreak(1));
+    }
+
     setLike(true);
-    dispatch(decreaseLikes())
+    dispatch(decreaseLikes());
     dispatch(setVisibility([true, id]));
     dispatch(setChaos(chaos));
     dispatch(setCredits(credits));

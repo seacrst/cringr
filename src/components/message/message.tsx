@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectMessage, setVisibility } from "src/store/message_slice";
 import styles from "./message.module.scss";
 import cn from "classnames"
+import notify from "assets/audio/output.mp3";
+import {Howl} from "howler";
+
 import { FC, useEffect, useState } from "react";
 
 interface Props {
@@ -17,7 +20,7 @@ const Message: FC<Props> = ({id}) => {
     if (visible) {
       const t1 = setTimeout(() => {
         setState(true);
-      }, 50);
+      }, 300);
 
       const t2 = setTimeout(() => {
         dispatch(setVisibility([false, id]))
@@ -29,7 +32,26 @@ const Message: FC<Props> = ({id}) => {
     } else {
       setState(false);
     }
-  }, [visible])
+  }, [visible]);
+
+  useEffect(() => {
+    if (visible) {
+      const t = setTimeout(() => {
+        const sound = new Howl({
+          src: [notify],
+          loop: false,
+          volume: 0.2,
+          autoplay: true,
+        });
+        
+        if (!sound.playing) {
+          sound.play("into");
+        }
+      }, 500);
+
+      return () => clearTimeout(t);
+    }
+  }, [visible]);
   
   return (
     <div className={cn(styles.box, {[styles.visible]: visible && state})}>

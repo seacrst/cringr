@@ -8,7 +8,7 @@ import won from "assets/audio/game-bonus-144751.mp3";
 import failure from "assets/audio/080205_life-lost-game-over-89697.mp3";
 import {Howl} from "howler";
 import { setInitialPost, setInitialPosts } from "src/store/post_slice";
-import { setInitialUser } from "src/store/user_slice";
+import { setFollowers, setInitialUser } from "src/store/user_slice";
 
 const Notification = () => {
   const { open, message, title } = useSelector(selectModal);
@@ -34,6 +34,8 @@ const Notification = () => {
         volume: 0.7,
         autoplay: false
       });
+
+      dispatch(setFollowers(1));
       
       if (!sound.playing()) {
         sound.play();
@@ -61,8 +63,8 @@ const Notification = () => {
         <p className={styles.title}>{title}</p>
         <p className={styles.msg}>{message}</p>
       </div>
-      <span className={styles.x} onClick={handleClose}>&times;</span>
-      <button onClick={handleButton} className={styles.bt}>TRY AGAIN</button>
+      {!(title.startsWith("Failure") || title.endsWith("Won!")) && <span className={styles.x} onClick={handleClose}>&times;</span>}
+      {(title.startsWith("Failure") || title.endsWith("Won!")) && <button onClick={handleButton} className={styles.bt}>TRY AGAIN</button>}
     </div>
   );
 };

@@ -23,6 +23,7 @@ const Credits = () => {
     <section className={styles.credits}>
       <header className={styles.header}>
         <span>CREDITS</span>
+        <span>&nbsp;</span>
       </header>
 
       <div className={styles.right}>

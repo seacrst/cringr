@@ -44,7 +44,7 @@ const Page = () => {
       </div>
 
       <div className={styles.actions}>
-        <button onMouseEnter={hover} onMouseLeave={leave} onClick={click} className={styles.load_button}>LOAD MORE</button>
+        <button onMouseEnter={hover} onMouseLeave={leave} onClick={click} className={styles.load_button}>LOAD NEXT</button>
         <Settings/>
       </div>
     </section>

@@ -7,7 +7,8 @@ interface User {
     chaos: number,
     credits: number,
     likes: number,
-    followers: number
+    followers: number,
+    streak: number
   },
   page: {
     shuffle: boolean
@@ -18,7 +19,8 @@ const initialState: User = {
     chaos: 0,
     credits: 100,
     likes: LIKES,
-    followers: 0
+    followers: 0,
+    streak: 0
   },
   page: {
     shuffle: false
@@ -34,6 +36,9 @@ export const userSlice = createSlice({
     },
     decreaseLikes(state) {
       state.user.likes -= 1
+    },
+    increaseLike(state, action: PayloadAction<number>) {
+      state.user.likes =+ action.payload;
     },
     setChaos(state, action: PayloadAction<number>) {
       if ((state.user.chaos + action.payload) < 0) {
@@ -139,8 +144,20 @@ export const userSlice = createSlice({
       }
     },
     setInitialUser(state) {
-      state.user = initialState.user;
+      state.user = {
+        ...initialState.user,
+        followers: state.user.followers
+      };
       state.page = initialState.page;
+    },
+    setFollowers(state, action: PayloadAction<number>) {
+      state.user.followers += action.payload;
+    },
+    setStreak(state, action: PayloadAction<number>) {
+      state.user.streak += action.payload;
+    },
+    resetStreak(state) {
+      state.user.streak = 0;
     }
   }
 });
@@ -157,5 +174,9 @@ export const {
   setChaos,
   setCredits,
   setInitialUser,
-  setShuffled
+  setShuffled,
+  increaseLike,
+  setFollowers,
+  setStreak,
+  resetStreak
 } = userSlice.actions;
