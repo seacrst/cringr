@@ -6,7 +6,7 @@ const Credits = lazy(() => import("./credits/credits"))
 const Page = lazy(() => import("./page/page"))
 
 export const App = () => {
-
+  
   return (
     <div className="app">
       <Suspense fallback={<Loader/>}>

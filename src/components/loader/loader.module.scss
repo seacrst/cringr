@@ -15,16 +15,16 @@
 }
 
 .logo {
-  animation: appr .5s ease-in-out;
+  animation: appr .4s ease-in-out;
   border-radius: 30px;
 }
 
 @keyframes appr {
   0% {
-    transform: rotate(-180deg) scale(0.3);
+    transform: rotate(-120deg) scale(0.3);
   }
   50% {
-    transform: rotate(60deg)
+    transform: rotate(30deg)
   }
   100% {
     transform: rotate(0) scale(1);

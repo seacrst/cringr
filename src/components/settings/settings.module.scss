@@ -1,0 +1,16 @@
+.setting {
+  position: absolute;
+  right: 0;
+  bottom: 16px;
+}
+
+.sound {
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 4px solid #000;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}

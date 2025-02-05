@@ -11,7 +11,7 @@
 }
 
 .logo_box {
-  width: 80px;
+  width: 50%;
   height: 80px;
   position: relative;
 
@@ -24,6 +24,7 @@
 }
 
 .left {
+  width: 25%;
   text-shadow: 0 2px 5px #726f6f;
   color: #0040ff;
   font-size: 24px;
@@ -31,9 +32,11 @@
 }
 
 .right {
+  width: 25%;
   gap: 20px;
   align-items: center;
   display: flex;
+  justify-content: flex-end;
   text-shadow: 0 2px 5px #726f6f;
   color: #ff23a3;
   font-size: 24px;

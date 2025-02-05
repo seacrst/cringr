@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../post/post";
 import styles from "./page.module.scss";
-import { selectPosts, setCurrentId, shuffle } from "src/store/post_slice";
+import { selectPosts, setCredLoseHint, setCurrentId, shuffle } from "src/store/post_slice";
 import Notification from "components/notification/notification"
 import Title from "../title/title";
-import { selectUser, setCredits } from "src/store/user_slice";
+import { selectUser, setCredits, setShuffled } from "src/store/user_slice";
 import { rand } from "src/lib";
 import { range } from "derive-rust";
 import { useState } from "react";
+import Settings from "../settings/setting";
 
 const Page = () => {
   const posts = useSelector(selectPosts);
@@ -18,9 +19,18 @@ const Page = () => {
     dispatch(setCurrentId(0));
     dispatch(setCredits(rand(-25, 1-5)))
     dispatch(shuffle(user.chaos));
+    dispatch(setShuffled(true));
   };
 
-  useState(() => range(0, 25_000_000).map(x => x + 1));
+  const hover = () => {
+    dispatch(setCredLoseHint(true));
+  };
+  
+  const leave = () => {
+    dispatch(setCredLoseHint(false));
+  }
+
+  useState(() => range(0, 50_000_000).map(x => x + 1));
 
   return (
     <section className={styles.page}>
@@ -34,7 +44,8 @@ const Page = () => {
       </div>
 
       <div className={styles.actions}>
-        <button onClick={click} className={styles.load_button}>LOAD MORE</button>
+        <button onMouseEnter={hover} onMouseLeave={leave} onClick={click} className={styles.load_button}>LOAD MORE</button>
+        <Settings/>
       </div>
     </section>
   );

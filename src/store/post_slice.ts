@@ -14,18 +14,33 @@ export const postSlice = createSlice({
   initialState: {
     post: {
       currentId: 0
+    },
+    credits: {
+      loseHint: false
     }
   },
   reducers: {
     setCurrentId(state, action: PayloadAction<number>) {
       state.post.currentId = action.payload;
+    },
+    setCredLoseHint(state, action: PayloadAction<boolean>) {
+      state.credits.loseHint = action.payload;
+    },
+    setInitialPost(state) {
+      state.credits = {
+        loseHint: false
+      };
+
+      state.post = {
+        currentId: 0
+      };
     }
   }
-})
+});
 
-const rng = rangeInc(1, posts2.length)
+const rng = rangeInc(1, posts2.length);
 
-const evalPost = genPoints(rng.map((id, i) => {
+export const evalPosts = () => genPoints(rng.map((id, i) => {
   posts2[i].chaos = {
     value: NaN,
   };
@@ -36,12 +51,12 @@ const evalPost = genPoints(rng.map((id, i) => {
   return posts2[i] as Post;
 }));
 
-console.log(evalPost)
+const newPosts = evalPosts();
 
 const initialState: PostState = {
-  shuffle: genSlice(evalPost, 0),
-  posts: evalPost
-}
+  shuffle: genSlice(newPosts, 0),
+  posts: newPosts
+};
 
 export const postsSlice = createSlice({
   name: "post",
@@ -50,12 +65,18 @@ export const postsSlice = createSlice({
     shuffle(state, action: PayloadAction<number>) {
       state.shuffle = genSlice(genPoints(state.posts), action.payload)
       return state;
+    },
+    setInitialPosts(state) {
+      const newPosts = evalPosts();
+      state.shuffle = genSlice(newPosts, 0);
+      state.posts = newPosts;
     }
   }
 });
 
 export const selectPost: Select<{currentId: number}> = (state) => state.post.post;
+export const selectCreditsHints: Select<{loseHint: boolean}> = (state) => state.post.credits;
 export const selectPosts: Select<PostState> = (state) => state.posts;
 
-export const {setCurrentId} = postSlice.actions;
-export const {shuffle} = postsSlice.actions;
+export const {setCurrentId, setCredLoseHint, setInitialPost} = postSlice.actions;
+export const {shuffle, setInitialPosts} = postsSlice.actions;

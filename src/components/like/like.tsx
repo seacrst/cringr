@@ -1,12 +1,14 @@
 import styles from "./like.module.scss"
 import heart from "assets/icons/heart.svg";
 import liked from "assets/icons/liked.svg";
-import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import pop from "assets/audio/multi-pop-1-188165.mp3"
+import { Howl } from "howler";;
 // import { rand } from "src/lib";
 // import { Post } from "src/parts";
 import { setVisibility } from "src/store/message_slice";
-import { decreaseLikes, setChaos, setCredits } from "src/store/user_slice";
+import { decreaseLikes, selectUser, setChaos, setCredits } from "src/store/user_slice";
 
 interface Props {
   id: number
@@ -17,31 +19,32 @@ interface Props {
 const Like: FC<Props> = ({chaos, credits, id}) => {
   const [like, setLike] = useState(false);
   const dispatch = useDispatch();
+  const {page} = useSelector(selectUser);
 
   const handleLike = () => {
+    const sound = new Howl({
+      src: [pop],
+      loop: false,
+      volume: 0.5,
+      autoplay: true,
+    });
+
+    if (!sound.playing) {
+      sound.play();
+    }
+
     setLike(true);
     dispatch(decreaseLikes())
     dispatch(setVisibility([true, id]));
     dispatch(setChaos(chaos));
     dispatch(setCredits(credits));
-    
-
-    // if (chaos.add) {
-    //   dispatch(increaseChaos(rand(chaos.add.min, chaos.add.max)));
-    // }
-
-    // if (chaos.sub) {
-    //   dispatch(decreaseChaos(rand(chaos.sub.min, chaos.sub.max)));
-    // }
-
-    // if (credits.add) {
-    //   dispatch(increaseCredits(rand(credits.add.min, credits.add.max)))
-    // }
-
-    // if (credits.sub) {
-    //   dispatch(decreaseCredits(rand(credits.sub.min, credits.sub.max)));
-    // }
   }
+
+  useEffect(() => {
+    if (page.shuffle) {
+      setLike(false);
+    }
+  }, [page]); 
 
   return (
     <button onClick={handleLike} className={styles.like} disabled={like}>

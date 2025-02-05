@@ -4,8 +4,8 @@ import { Post as PostItem } from "src/parts";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPost, setCurrentId } from "src/store/post_slice";
 import Like from "../like/like";
-import Comment from "../comment/comment";
-import Repost from "../repost/repost";
+// import Comment from "../comment/comment";
+// import Repost from "../repost/repost";
 import { selectMessage } from "src/store/message_slice";
 import Message from "../message/message";
 
@@ -36,9 +36,9 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
       case names[2]: return Doomsday_Dennis;
       case names[3]: return Cancel_Witch;
       case names[4]: return Captian_Obvious;
-      default: return ""
+      default: return "";
     }
-  })()
+  })();
 
   return (
     <article onMouseEnter={setCurrent} onMouseLeave={unsetCurrent} className={styles.post} style={currentId === id ? {border: "4px solid #0040ff"} : {}} onClick={setCurrent}>
@@ -53,8 +53,8 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
       </div>
 
       <div className={styles.buttons}>
-        <Repost/>
-        <Comment/>
+        {/* <Repost/>
+        <Comment/> */}
         <Like id={id || 0} chaos={chaos?.value!} credits={credits?.value!} />
       </div>
 

@@ -8,6 +8,9 @@ interface User {
     credits: number,
     likes: number,
     followers: number
+  },
+  page: {
+    shuffle: boolean
   }
 }
 const initialState: User = {
@@ -16,6 +19,9 @@ const initialState: User = {
     credits: 100,
     likes: LIKES,
     followers: 0
+  },
+  page: {
+    shuffle: false
   }
 }
 
@@ -46,6 +52,9 @@ export const userSlice = createSlice({
       }
 
       return state;
+    },
+    setShuffled(state, action: PayloadAction<boolean>) {
+      state.page.shuffle = action.payload;
     },
     setCredits(state, action: PayloadAction<number>) {
       if ((state.user.credits + action.payload) < 0) {
@@ -128,6 +137,10 @@ export const userSlice = createSlice({
         ...state.user,
         credits: state.user.credits - action.payload
       }
+    },
+    setInitialUser(state) {
+      state.user = initialState.user;
+      state.page = initialState.page;
     }
   }
 });
@@ -142,5 +155,7 @@ export const {
   increaseLikes, 
   decreaseLikes,
   setChaos,
-  setCredits
+  setCredits,
+  setInitialUser,
+  setShuffled
 } = userSlice.actions;
