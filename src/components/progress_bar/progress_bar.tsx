@@ -25,7 +25,7 @@ const ProgressBar: FC<Props> = ({kind}) => {
         {[styles.pulseCred3]: styleCred(5)}
       )}
         >
-      <div className={styles[`filling_${kind}`]} style={{height: `${kind === "chaos" ? chaos : credits}%`}}></div>
+      <div className={styles[`filling_${kind}`]} style={{transition: "height .3s", height: `${kind === "chaos" ? chaos : credits}%`}}></div>
     </div>
   )
 };

@@ -6,17 +6,16 @@
   background-color: #ffffff;
   display: flex;
   align-items: end;
+  transition: height .3s;
 }
 
 .chaos {
   border: 4px solid $chaos;
-  transition: height .3s;
   margin-top: auto;
 }
 
 .credits {
   border: 4px solid $credits;
-  transition: height .3s;
   margin-top: auto;
 }
 
@@ -44,7 +43,7 @@
     box-shadow: 0 0 0  $chaos;
   }
   50% {
-    box-shadow: 0 6px 12px $chaos;
+    box-shadow: 0 0 12px $chaos;
   }
   100% {
     box-shadow: 0 0 0  $chaos;
@@ -56,7 +55,7 @@
     box-shadow: 0 0 0  $credits;
   }
   50% {
-    box-shadow: 0 6px 12px $credits;
+    box-shadow: 0 0 12px $credits;
   }
   100% {
     box-shadow: 0 0 0  $credits;
