@@ -4,7 +4,10 @@ import styles from "./page.module.scss";
 import { selectPosts, setCurrentId, shuffle } from "src/store/post_slice";
 import Notification from "components/notification/notification"
 import Title from "../title/title";
-import { selectUser } from "src/store/user_slice";
+import { selectUser, setCredits } from "src/store/user_slice";
+import { rand } from "src/lib";
+import { range } from "derive-rust";
+import { useState } from "react";
 
 const Page = () => {
   const posts = useSelector(selectPosts);
@@ -13,8 +16,11 @@ const Page = () => {
 
   const click = () => {
     dispatch(setCurrentId(0));
+    dispatch(setCredits(rand(-25, 1-5)))
     dispatch(shuffle(user.chaos));
   };
+
+  useState(() => range(0, 25_000_000).map(x => x + 1));
 
   return (
     <section className={styles.page}>

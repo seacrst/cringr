@@ -38,3 +38,51 @@
   background-color: #ccc;
   position: relative;
 }
+
+@keyframes pulseAnim {
+  0% {
+    box-shadow: 0 0 0  $chaos;
+  }
+  50% {
+    box-shadow: 0 6px 12px $chaos;
+  }
+  100% {
+    box-shadow: 0 0 0  $chaos;
+  }
+}
+
+@keyframes pulseAnim2 {
+  0% {
+    box-shadow: 0 0 0  $credits;
+  }
+  50% {
+    box-shadow: 0 6px 12px $credits;
+  }
+  100% {
+    box-shadow: 0 0 0  $credits;
+  }
+}
+
+.pulseChs1 {
+  animation: pulseAnim .8s ease-in-out infinite;
+}
+
+.pulseChs2 {
+  animation: pulseAnim .4s ease-in-out infinite;
+}
+
+.pulseChs3 {
+  animation: pulseAnim .2s ease-in-out infinite;
+}
+
+.pulseCred1 {
+  animation: pulseAnim2 .8s ease-in-out infinite;
+}
+
+.pulseCred2 {
+  animation: pulseAnim2 .4s ease-in-out infinite;
+}
+
+.pulseCred3 {
+  animation: pulseAnim2 .2s ease-in-out infinite;
+}

@@ -15,8 +15,15 @@
   font-weight: 700;
 }
 
+.pic {
+  width: 50px;
+  border-radius: 20px;
+}
+
 .tags {
+  display: inline-block;
   color: rgb(44, 178, 255);
+  width: 35%;
 }
 
 .buttons {
@@ -24,4 +31,13 @@
   position: absolute;
   bottom: 14px;
   right: 14px;
+}
+
+.character {
+  display: flex;
+  gap: 10px;
+}
+
+.text {
+  padding: 10px 0 30px;
 }

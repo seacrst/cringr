@@ -3,7 +3,26 @@
   border: 2px solid black;
   padding: 0 40px;
   overflow-y: auto;
+
+  &::-webkit-scrollbar-thumb {
+    background: #9CA3AF;
+    width: 6px;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+    border-radius: 4px;
+    position: relative;
+  }
+
   position: relative;
+  border-radius: 12px;
 }
 
 .load_button {

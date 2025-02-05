@@ -1,18 +1,32 @@
+*, *::after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  height: 100dvh;
+  background-image: url("assets/images/cringr_bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .screen {
   padding: 20px;
   width: 1200px;
-  height: 600px;
+  height: 94%;
   display: flex;
   justify-content: space-between;
   gap: 40px;
-  border: 2px solid #00ffff;
   margin: auto;
+  background-color: #fff;
+  border-radius: 12px;
 }
 
 body {
   font-family: "Lato", sans-serif;
-}
-
-*, *::after, *::before {
-  user-select: none;
 }

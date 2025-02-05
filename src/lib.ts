@@ -5,7 +5,7 @@ export const LIKES: number = 10;
 const MIN: number = 3;
 const MAX: number = 5;
 
-const names = [
+export const names = [
   "Flat Earther",
   "Hype Henry",
   "Doomsday Dennis",
@@ -28,7 +28,7 @@ export function genPoints(posts: Post[]) {
     if (post.onLike.chaos.add) {
       chaos = rand(post.onLike.chaos.add.min, post.onLike.chaos.add.max);
     }
-    
+
     if (post.onLike.chaos.sub) {
       chaos = rand(post.onLike.chaos.sub.min, post.onLike.chaos.sub.max);
     }

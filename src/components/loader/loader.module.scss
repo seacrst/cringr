@@ -1,0 +1,32 @@
+.box {
+  background-image: url("assets/images/cringr_bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  animation: appr .5s ease-in-out;
+  border-radius: 30px;
+}
+
+@keyframes appr {
+  0% {
+    transform: rotate(-180deg) scale(0.3);
+  }
+  50% {
+    transform: rotate(60deg)
+  }
+  100% {
+    transform: rotate(0) scale(1);
+  }
+}
