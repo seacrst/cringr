@@ -17,12 +17,15 @@ import Hype_Henry from "assets/images/Hype_Henry.jpg";
 import Flat_Earther2 from "assets/images/Flat_Earther2.jpg";
 import { names } from "src/lib";
 import { selectModal } from "src/store/notification_slice";
+import cn from "classnames"
+import { selectUser } from "src/store/user_slice";
 
 const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, credits, reposted}) => {
   const dispatch = useDispatch();
   const {post: {currentId}} = useSelector(selectPost);
   const {id: mId} = useSelector(selectMessage);
   const {open} = useSelector(selectModal);
+  const {user} = useSelector(selectUser);
 
   const setCurrent = () => {
     if (!open) {
@@ -47,8 +50,19 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
     }
   })();
 
+  const less = user.credits + credits?.value! < user.credits;
+
+  const styleCred = (x: number) => user.credits <= x && less && currentId === id;
+
   return (
-    <article onMouseEnter={setCurrent} onMouseLeave={unsetCurrent} className={styles.post} style={currentId === id ? {border: "4px solid #0040ff"} : {}} onClick={setCurrent}>
+    <article onMouseEnter={setCurrent} onMouseLeave={unsetCurrent} className={cn(
+      styles.post, 
+      {[styles.active] : currentId === id}, 
+      {[styles.pulseCred1]: styleCred(20)},
+      {[styles.pulseCred2]: styleCred(10)},
+      {[styles.pulseCred3]: styleCred(5)},
+      )} onClick={setCurrent}>
+
       {mId === id && <Message id={id || 0} />}
       <header className={styles.character}>
         <img className={styles.pic} src={pic} alt="character" />
