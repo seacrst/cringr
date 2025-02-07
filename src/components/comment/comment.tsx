@@ -31,7 +31,7 @@ const Comment: FC<CommentProps> = ({id}) => {
   };
 
   return (
-    <button disabled={post.commentsIds.includes(id) || user.credits > 220} onClick={handleComment} className={styles.comment}>
+    <button disabled={post.commentsIds.includes(id) || user.credits > 20} onClick={handleComment} className={styles.comment}>
       {post.commentsIds.includes(id) ? <img src={commentIconChecked} alt="comment" /> : user.credits > 20 ? <img src={commmentDisabled} alt="comment" /> :  <img src={commentIcon} alt="comment" />}
       COMMENT
     </button>
