@@ -8,7 +8,8 @@ interface User {
     credits: number,
     likes: number,
     followers: number,
-    streak: number
+    streak: number,
+    fails: number
   },
   page: {
     shuffle: boolean
@@ -19,7 +20,8 @@ const initialState: User = {
     chaos: 0,
     credits: 100,
     likes: LIKES,
-    followers: 0,
+    fails: parseInt(sessionStorage.getItem("fails") ?? "0"),
+    followers: parseInt(sessionStorage.getItem("followers") ?? "0"),
     streak: 0
   },
   page: {
@@ -36,6 +38,9 @@ export const userSlice = createSlice({
     },
     decreaseLikes(state) {
       state.user.likes -= 1
+    },
+    setDecreasedLikes(state, action: PayloadAction<number>) {
+      state.user.likes -= action.payload;
     },
     increaseLike(state, action: PayloadAction<number>) {
       state.user.likes =+ action.payload;
@@ -78,6 +83,12 @@ export const userSlice = createSlice({
       }
 
       return state;
+    },
+    addFail(state) {
+      state.user.fails += 1;
+    },
+    setFails(state, action: PayloadAction<number>) {
+      state.user.fails = action.payload;
     },
     increaseChaos(state, action: PayloadAction<number>) {
       if ((state.user.chaos + action.payload) < 0) {
@@ -144,14 +155,16 @@ export const userSlice = createSlice({
       }
     },
     setInitialUser(state) {
-      state.user = {
-        ...initialState.user,
-        followers: state.user.followers
-      };
+      const followers = state.user.followers;
+      const fails = state.user.fails;
+      state.user = { ...initialState.user, followers, fails };
       state.page = initialState.page;
     },
     setFollowers(state, action: PayloadAction<number>) {
       state.user.followers += action.payload;
+    },
+    resetFollowers(state) {
+      state.user.followers = 0;
     },
     setStreak(state, action: PayloadAction<number>) {
       state.user.streak += action.payload;
@@ -171,6 +184,7 @@ export const {
   decreaseCredits, 
   increaseLikes, 
   decreaseLikes,
+  setDecreasedLikes,
   setChaos,
   setCredits,
   setInitialUser,
@@ -178,5 +192,8 @@ export const {
   increaseLike,
   setFollowers,
   setStreak,
-  resetStreak
+  resetStreak,
+  resetFollowers,
+  setFails,
+  addFail
 } = userSlice.actions;

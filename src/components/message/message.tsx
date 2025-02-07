@@ -13,7 +13,7 @@ interface Props {
 
 const Message: FC<Props> = ({id}) => {
   const dispatch = useDispatch();
-  const { message, visible } = useSelector(selectMessage);
+  const { message, visible, color } = useSelector(selectMessage);
   const [state, setState] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Message: FC<Props> = ({id}) => {
 
       const t2 = setTimeout(() => {
         dispatch(setVisibility([false, id]))
-      }, 3000);
+      }, 4200);
       return () => {
         clearTimeout(t1);
         clearTimeout(t2);
@@ -35,7 +35,7 @@ const Message: FC<Props> = ({id}) => {
   }, [visible]);
 
   useEffect(() => {
-    if (visible) {
+    if (visible && message) {
       const t = setTimeout(() => {
         const sound = new Howl({
           src: [notify],
@@ -54,7 +54,7 @@ const Message: FC<Props> = ({id}) => {
   }, [visible]);
   
   return (
-    <div className={cn(styles.box, {[styles.visible]: visible && state})}>
+    <div style={{color: `${color === "red" ? "#ff5410" : "#00dd90"}`}} className={cn(styles.box, {[styles.visible]: visible && state})}>
       <p className={styles.text}>{message}</p>
     </div>
   )

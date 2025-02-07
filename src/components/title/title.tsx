@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./title.module.scss";
 import { increaseLikes, resetStreak, selectUser } from "src/store/user_slice";
 import { useEffect } from "react";
-import { setOpen, setNotfication } from "src/store/modal_slice";
+import { setNotfication } from "src/store/notification_slice";
 import logo from "assets/images/CringrLogo.png"
 
 const Title = () => {
@@ -11,8 +11,9 @@ const Title = () => {
 
   useEffect(() => {
     if (user.likes === 0) {
-      dispatch(setOpen(true));
       dispatch(setNotfication({
+        open: true,
+        type: "failure",
         title: "Failure",
         message: "Ran out of likes"
       }));
@@ -22,8 +23,9 @@ const Title = () => {
   useEffect(() => {
     if (user.streak === 4) {
       dispatch(increaseLikes());
-      dispatch(setOpen(true))
       dispatch(setNotfication({
+        open: true,
+        type: "bonus",
         title: "🚀Bonus +1 Like!",
         message: "С.H.A.O.S increasing 4 times in a row!🔥"
       }))

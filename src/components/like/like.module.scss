@@ -1,9 +1,10 @@
 .like {
   display: flex;
-  padding: 4px 8px;
+  align-items: center;
+  padding: 2px 8px;
   border-radius: 12px;
   background-color: #ff23a3;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
 }

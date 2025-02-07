@@ -4,6 +4,8 @@ import { Post } from "./parts";
 export const LIKES: number = 10;
 const MIN: number = 3;
 const MAX: number = 5;
+export const COMMENT_TYPING_SPEED: number = 30;
+export const MAX_FAILS: number = 3;
 
 export const names = [
   "Flat Earther",
@@ -14,10 +16,8 @@ export const names = [
 ] as const;
 
 export function rand(min: number, max: number): number {
-    const r1 = Math.random();
-    const r2 = Math.random();
-    const mix = (r1 + r2) / 2
-    return Math.floor(mix * (max - min + 1) + min);
+  const r = (Math.floor(Math.random() * (max - min + 1))) + min;
+  return r < min ? rand(min, max) : r;
 }
 
 export function genPoints(posts: Post[]) {
@@ -43,6 +43,7 @@ export function genPoints(posts: Post[]) {
 
     return {
       ...post,
+      reposted: false,
       chaos: {value: chaos},
       credits: {value: credits}
     }
@@ -51,8 +52,6 @@ export function genPoints(posts: Post[]) {
 
 export function genSlice(posts: Post[], chaos: number): Post[] {
   const vec: number[] = [];
-
-  // const names = Array.from(new Set(posts.map(post => post.character)));
 
   let random = rand(MIN, MAX);
 
@@ -74,7 +73,7 @@ export function genSlice(posts: Post[], chaos: number): Post[] {
   cycle();
 
   return vec.map(i => {
-    const selPosts = posts.filter(post => post.character === names[i] && post.onLike.сhaosGenCondition <= chaos)
+    const selPosts = posts.filter(post => post.character === names[i] && post.onLike.chaosGenCondition <= chaos)
 
     const randIdx = Math.floor(Math.random() * selPosts.length);
     return selPosts[randIdx]
@@ -106,7 +105,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -133,7 +132,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -160,7 +159,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -187,7 +186,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -214,7 +213,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -241,7 +240,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -268,7 +267,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -295,7 +294,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 30
+      "chaosGenCondition": 30
     }
   },
   {
@@ -322,7 +321,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 40
+      "chaosGenCondition": 40
     }
   },
   {
@@ -349,7 +348,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 50
+      "chaosGenCondition": 50
     }
   },
   {
@@ -376,7 +375,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -403,7 +402,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -430,7 +429,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -457,7 +456,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -484,7 +483,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -511,7 +510,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -538,7 +537,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -565,7 +564,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 30
+      "chaosGenCondition": 30
     }
   },
   {
@@ -592,7 +591,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 40
+      "chaosGenCondition": 40
     }
   },
   {
@@ -619,7 +618,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 50
+      "chaosGenCondition": 50
     }
   },
   {
@@ -646,7 +645,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -673,7 +672,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -700,7 +699,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -727,7 +726,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -754,7 +753,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -781,7 +780,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -808,7 +807,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -835,7 +834,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 30
+      "chaosGenCondition": 30
     }
   },
   {
@@ -862,7 +861,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 40
+      "chaosGenCondition": 40
     }
   },
   {
@@ -889,7 +888,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 50
+      "chaosGenCondition": 50
     }
   },
   {
@@ -916,7 +915,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -943,7 +942,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -970,7 +969,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -997,7 +996,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1024,7 +1023,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1051,7 +1050,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1078,7 +1077,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1105,7 +1104,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 30
+      "chaosGenCondition": 30
     }
   },
   {
@@ -1132,7 +1131,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 40
+      "chaosGenCondition": 40
     }
   },
   {
@@ -1159,7 +1158,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 50
+      "chaosGenCondition": 50
     }
   },
   {
@@ -1186,7 +1185,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1213,7 +1212,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1240,7 +1239,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1267,7 +1266,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1294,7 +1293,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1321,7 +1320,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1348,7 +1347,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 0
+      "chaosGenCondition": 0
     }
   },
   {
@@ -1375,7 +1374,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 30
+      "chaosGenCondition": 30
     }
   },
   {
@@ -1402,7 +1401,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 40
+      "chaosGenCondition": 40
     }
   },
   {
@@ -1429,7 +1428,7 @@ export const posts2: Array<Partial<Post>> = [
         "add": null,
         "sub": null
       },
-      "сhaosGenCondition": 50
+      "chaosGenCondition": 50
     }
   }
 ]
@@ -1466,7 +1465,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1499,7 +1498,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1532,7 +1531,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1565,7 +1564,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1598,7 +1597,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1631,7 +1630,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1664,7 +1663,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1697,7 +1696,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 30
+//       chaosGenCondition: 30
 //     }
 //   },
 //   {
@@ -1730,7 +1729,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 40
+//       chaosGenCondition: 40
 //     }
 //   },
 //   {
@@ -1763,7 +1762,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 50
+//       chaosGenCondition: 50
 //     }
 //   },
 //   {
@@ -1796,7 +1795,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1829,7 +1828,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1862,7 +1861,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1895,7 +1894,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   },
 //   {
@@ -1928,7 +1927,7 @@ export const posts2: Array<Partial<Post>> = [
 //         add: null,
 //         sub: null,
 //       },
-//       сhaosGenCondition: 0
+//       chaosGenCondition: 0
 //     }
 //   }
 // ];

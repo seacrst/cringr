@@ -23,7 +23,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -50,7 +50,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -77,7 +77,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -104,7 +104,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -131,7 +131,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -158,7 +158,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -185,7 +185,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -212,7 +212,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 30
+      chaosGenCondition: 30
     }
   },
   {
@@ -239,7 +239,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 40
+      chaosGenCondition: 40
     }
   },
   {
@@ -266,7 +266,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 50
+      chaosGenCondition: 50
     }
   },
   {
@@ -293,7 +293,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -320,7 +320,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -347,7 +347,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -374,7 +374,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {
@@ -401,7 +401,7 @@
         add: null,
         sub: null,
       },
-      сhaosGenCondition: 0
+      chaosGenCondition: 0
     }
   },
   {

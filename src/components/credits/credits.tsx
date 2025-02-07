@@ -1,10 +1,10 @@
-import { setNotfication, setOpen } from "src/store/modal_slice";
+import { setNotfication } from "src/store/notification_slice";
 import Arrow from "../arrow/arrow";
 import ProgressBar from "../progress_bar/progress_bar";
 import styles from "./credits.module.scss"
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser } from "src/store/user_slice";
+import { addFail, selectUser } from "src/store/user_slice";
 
 const Credits = () => {
   const {user} = useSelector(selectUser);
@@ -12,13 +12,17 @@ const Credits = () => {
 
   useEffect(() => {
     if (user.credits === 0) {
-      dispatch(setOpen(true))
+      sessionStorage.setItem("fails", `${user.fails + 1}`);
       dispatch(setNotfication({
+        open: true,
+        type: "failure",
         title: "Failure!",
         message: "You lost all the credits"
       }));
+      dispatch(addFail());
     }
-  }, [user])
+  }, [user.credits]);
+
   return (
     <section className={styles.credits}>
       <header className={styles.header}>

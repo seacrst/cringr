@@ -1,24 +1,39 @@
 import styles from "./comment.module.scss"
-// import repost from "assets/icons/heart.svg";
 import commentIcon from "assets/icons/comment.svg";
 import commentIconChecked from "assets/icons/commented.svg";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { increaseChaos } from "src/store/user_slice";
+import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { comments } from "src/parts";
+import { setNotfication } from "src/store/notification_slice";
+import { selectPost, setPostId } from "src/store/post_slice";
+import { selectUser } from "src/store/user_slice";
+import commmentDisabled from "assets/icons/comment_disabled.svg";
 
-const Comment = () => {
-  const [comment, setComment] = useState(false);
+interface CommentProps {
+  id: number
+}
+
+const Comment: FC<CommentProps> = ({id}) => {
+  const { post } = useSelector(selectPost);
+  const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const handleComment = () => {
-    setComment(true);
-    dispatch(increaseChaos(30))
-  }
+    const comment = comments[Math.floor(Math.random() * comments.length)];
+
+    dispatch(setPostId(id));
+    dispatch(setNotfication({
+      open: true,
+      title: "Disinfo Bot",
+      message: comment,
+      type: "comment"
+    }));
+  };
 
   return (
-    <button onClick={handleComment} className={styles.like}>
-    {comment ? <img src={commentIconChecked} alt="comment" /> : <img src={commentIcon} alt="comment" />}
-    COMMENT
+    <button disabled={post.commentsIds.includes(id) || user.credits > 220} onClick={handleComment} className={styles.comment}>
+      {post.commentsIds.includes(id) ? <img src={commentIconChecked} alt="comment" /> : user.credits > 20 ? <img src={commmentDisabled} alt="comment" /> :  <img src={commentIcon} alt="comment" />}
+      COMMENT
     </button>
   );
 };

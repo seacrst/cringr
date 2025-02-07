@@ -4,10 +4,11 @@ import { Post as PostItem } from "src/parts";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPost, setCurrentId } from "src/store/post_slice";
 import Like from "../like/like";
-// import Comment from "../comment/comment";
-// import Repost from "../repost/repost";
+import Comment from "../comment/comment";
+import Repost from "../repost/repost";
 import { selectMessage } from "src/store/message_slice";
 import Message from "../message/message";
+import repostIcon from "assets/icons/reposted.svg";
 
 import Captian_Obvious from "assets/images/Captian_Obvious.jpg";
 import Cancel_Witch from "assets/images/Cancel_Witch.jpg";
@@ -15,18 +16,24 @@ import Doomsday_Dennis from "assets/images/Doomsday_Dennis.jpg";
 import Hype_Henry from "assets/images/Hype_Henry.jpg";
 import Flat_Earther2 from "assets/images/Flat_Earther2.jpg";
 import { names } from "src/lib";
+import { selectModal } from "src/store/notification_slice";
 
-const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, credits}) => {
+const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, credits, reposted}) => {
   const dispatch = useDispatch();
-  const {currentId} = useSelector(selectPost)
+  const {post: {currentId}} = useSelector(selectPost);
   const {id: mId} = useSelector(selectMessage);
+  const {open} = useSelector(selectModal);
 
   const setCurrent = () => {
-    dispatch(setCurrentId(id!));
+    if (!open) {
+      dispatch(setCurrentId(id!));
+    }
   };
 
   const unsetCurrent = () => {
-    dispatch(setCurrentId(0));
+    if (!open) {
+      dispatch(setCurrentId(0));
+    }
   };
 
   const pic = (() => {
@@ -50,17 +57,19 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
       
       <div className={styles.text}>
         <p>{content}</p>
+        <footer className={styles.tags}>
+          <span>{hashTags}</span>
+        </footer>
       </div>
 
       <div className={styles.buttons}>
-        {/* <Repost/>
-        <Comment/> */}
+        {reposted ? <span className={styles.reposted}>
+          <img src={repostIcon} alt="repostIcon" />
+          Disinfo Bot Reposted
+        </span> : <Repost id={id!} />}
+        <Comment id={id!} />
         <Like id={id || 0} chaos={chaos?.value!} credits={credits?.value!} />
       </div>
-
-      <footer className={styles.tags}>
-        <span>{hashTags}</span>
-      </footer>
     </article>
   );
 };

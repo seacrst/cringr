@@ -1,0 +1,46 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 6px solid #0040ff;
+  border-radius: 12px;
+  background-color: #fff;
+  transition: transform .3s;
+  padding: 40px 24px;
+  position: fixed;
+  width: 40%;
+  min-height: 50%;
+  min-height: 150px;
+  z-index: 4;
+}
+
+.box {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.list {
+  padding: 10px 24px;
+}
+
+.bt {
+  display: block;
+  padding: 12px 32px;
+  margin: auto;
+  border-radius: 12px;
+  font-size: 24px;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+}

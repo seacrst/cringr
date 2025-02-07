@@ -1,11 +1,17 @@
-.like {
+.repost {
   display: flex;
+  align-items: center;
   padding: 4px 8px;
   border-radius: 12px;
-  background-color: rgb(182, 182, 183);
+  background-color: #9546ef;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
   align-self: center;
   margin-right: 10px;
+
+  &:disabled {
+    background-color: #b6b6b7;
+    color: #717171;
+  }
 }

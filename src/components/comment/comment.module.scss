@@ -1,11 +1,16 @@
-.like {
+.comment {
   display: flex;
   align-items: center;
-  padding: 4px 8px;
+  padding: 2px 8px;
   border-radius: 12px;
-  background-color: rgb(182, 182, 183);
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
   margin-right: 10px;
+  background-color: #6279eb;
+  
+  &:disabled {
+    background-color: #b6b6b7;
+    color: #717171;
+  }
 }

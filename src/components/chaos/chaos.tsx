@@ -4,7 +4,7 @@ import ProgressBar from "../progress_bar/progress_bar";
 import styles from "./chaos.module.scss"
 import { selectUser } from "src/store/user_slice";
 import { useEffect } from "react";
-import { setNotfication, setOpen } from "src/store/modal_slice";
+import { setNotfication } from "src/store/notification_slice";
 
 const Chaos = () => {
   const {user} = useSelector(selectUser);
@@ -12,8 +12,9 @@ const Chaos = () => {
 
   useEffect(() => {
     if (user.chaos === 100) {
-      dispatch(setOpen(true));
       dispatch(setNotfication({
+        open: true,
+        type: "victory",
         title: "🎉You Won!",
         message: "⭐You have a new follower!🤖"
       }));

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Arrow: FC<Props> = ({kind}) => {
-  const {currentId} = useSelector(selectPost);
+  const {post: {currentId}} = useSelector(selectPost);
   const {posts} = useSelector(selectPosts);
   const {user} = useSelector(selectUser);
 
