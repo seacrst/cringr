@@ -24,6 +24,7 @@ const Page = () => {
 
   const handleShuffle = () => {
     scrollRef.current?.scrollIntoView({behavior: "smooth"});
+    
     dispatch(setCurrentId(0));
     dispatch(setCredits(rand(-25, -15)));
     dispatch(shuffle([user.chaos, post.repostIds]));

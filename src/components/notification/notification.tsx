@@ -3,7 +3,7 @@ import styles from "./notification.module.scss";
 import cn from "classnames";
 import { closeNotificationModal, selectModal, setInitialNotification } from "src/store/notification_slice";
 import bell from "assets/icons/notifications.svg";
-import { useEffect, useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import won from "assets/audio/game-bonus-144751.mp3";
 import failure from "assets/audio/080205_life-lost-game-over-89697.mp3";
 import {Howl} from "howler";
@@ -20,8 +20,10 @@ import { MAX_FAILS } from "src/lib";
 const Notification = () => {
   const { open, message, title, type } = useSelector(selectModal);
   const { post } = useSelector(selectPost);
-  const { shuffle } = useSelector(selectPosts);
+  const { posts } = useSelector(selectPosts);
   const { user } = useSelector(selectUser);
+
+  const sendRef = useRef<ElementRef<"button">>(null);
 
   const [typingText, setTypingText] = useState(false);
 
@@ -40,7 +42,7 @@ const Notification = () => {
   };
 
   const handleSend = () => {
-    const {chaos: {value: chaos}, credits: {value: credits}} = shuffle.find(p => p.id === post.postId)!;
+    const {chaos: {value: chaos}, credits: {value: credits}} = posts.find(p => p.id === post.postId)!;
     const g = moderates.green.find(m => credits >= m.inChange[0] && credits <= m.inChange[1]);
     const r = moderates.red.find(m => chaos >= m.inChange[0] && chaos >= m.inChange[1]);
     const m = Math.abs(chaos) >= Math.abs(credits) ? r : g;
@@ -111,18 +113,24 @@ const Notification = () => {
     }
   }, [open, type]);
 
+  useEffect(() => {
+    if (type === "comment" && sendRef.current) {
+      sendRef.current.disabled = true;
+    }
+  }, [type]);
+
   return (
     <div className={cn(styles.modal, {[styles.open]: open})}>
       {type === "comment" ? <img className={styles.bell} src={commentIcon} alt="comment" /> : <img className={styles.bell} src={bell} alt="bell" />}
       <div className={cn(styles.textBox, {[styles.commentBox]: type === "comment"})}>
         <p className={styles.title}>{title}</p>
         {type !== "comment" && <p className={styles.msg}>{message}</p>}
-        {typingText && type === "comment" && <TypingText text={message} onComplete={() => {}}/>}
+        {typingText && type === "comment" && <TypingText text={message} onComplete={() => {if (sendRef.current) sendRef.current.disabled = false}} />}
       </div>
       {type !== "victory" && type !== "failure" && <span className={styles.x} onClick={handleClose}>&times;</span>}
       {(type === "failure" || type === "victory") && <button onClick={handleButton} className={styles.bt}>TRY AGAIN</button>}
       {(type === "comment") && 
-      <button onClick={handleSend} className={cn(styles.btSend, styles.bt)}>
+      <button ref={sendRef} onClick={handleSend} className={cn(styles.btSend, styles.bt)}>
         SEND
         <img src={sendIcon} alt="send" />
       </button>}

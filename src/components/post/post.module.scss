@@ -22,7 +22,7 @@
 
 .tags {
   display: inline-block;
-  color: #2cb2ff;
+  color: #6279eb;
   padding-bottom: 10px;
 }
 
@@ -49,7 +49,7 @@
   margin-right: auto;
   padding: 6px 10px;
   border-radius: 12px;
-  background-color: rgb(182, 182, 183);
+  background-color: #b6b6b7;
   color: #fff;
   font-size: 18px;
   cursor: pointer;
@@ -63,13 +63,13 @@
 
 @keyframes pulseAnim {
   0% {
-    box-shadow: 0 0 0  #0040ff;
+    box-shadow: 0 0 0  #000;
   }
   50% {
-    box-shadow: 0 0 14px #0040ff;
+    box-shadow: 0 0 14px #000;
   }
   100% {
-    box-shadow: 0 0 0  #0040ff;
+    box-shadow: 0 0 0  #000;
   }
 }
 
