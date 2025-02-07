@@ -127,7 +127,7 @@ const Notification = () => {
         <img src={sendIcon} alt="send" />
       </button>}
       {type === "info" && <button onClick={confirmInfo} className={styles.bt}>CONFIRM</button>}
-      {type === "bonus" && <button onClick={confirm} className={styles.bt}>CONFIRM</button>}
+      {type === "bonus" && <button onClick={confirm} className={styles.bt}>CLOSE</button>}
     </div>
   );
 };
