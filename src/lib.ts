@@ -1,5 +1,5 @@
-import { range } from "derive-rust";
 import { Post } from "./parts";
+import Chance from "chance";
 
 export const LIKES: number = 10;
 const MIN: number = 3;
@@ -16,8 +16,9 @@ export const names = [
 ] as const;
 
 export function rand(min: number, max: number): number {
-  const r = (Math.floor(Math.random() * (max - min + 1))) + min;
-  return r < min ? rand(min, max) : r;
+  if (min > max) throw new Error(`Invalid range: ${min} > ${max}`);
+  const chance = new Chance();
+  return chance.integer({min, max});
 }
 
 export function genPoints(posts: Post[]) {
@@ -51,31 +52,22 @@ export function genPoints(posts: Post[]) {
 }
 
 export function genSlice(posts: Post[], chaos: number): Post[] {
-  const vec: number[] = [];
-
   let random = rand(MIN, MAX);
+  const usedNames = new Set<number>();
 
-  const cycle = () => { 
-    if (random === 0) {
-      return;
-    }
-
-    for (const _ of range(0, random)) {
-      const name = Math.floor(Math.random() * names.length);
-      if (vec.includes(name)) {
-        random -= 1;
-        return cycle();
-      }
-      vec.push(name);
+  while (random > 0) {
+    const name = rand(0, names.length - 1);
+    
+    if (!usedNames.has(name)) {
+      usedNames.add(name);
+      random--;
     }
   }
 
-  cycle();
-
-  return vec.map(i => {
+  return Array.from(usedNames).map(i => {
     const selPosts = posts.filter(post => post.character === names[i] && post.onLike.chaosGenCondition <= chaos)
 
-    const randIdx = Math.floor(Math.random() * selPosts.length);
+    const randIdx = rand(0, selPosts.length - 1);
     return selPosts[randIdx]
   });
 }

@@ -20,13 +20,13 @@ const Arrow: FC<Props> = ({kind}) => {
   const {user} = useSelector(selectUser);
 
   const [flag, setFlag] = useState({
-    chaos: 0,
-    cred: 0
+    chaos: NaN,
+    cred: NaN
   })
   const { loseHint } = useSelector(selectCreditsHints);
 
   const none = <div style={{width: "64px", height: "64px", background: "transparent"}}/>;
-
+  
   useEffect(() => {
     const post = posts.find(post => post.id === currentId)!;
 
@@ -36,7 +36,7 @@ const Arrow: FC<Props> = ({kind}) => {
         cred: post.credits.value
       });
     }
-  }, [currentId]);
+  }, [currentId, user.chaos, user.credits, posts]);
 
   if (loseHint && kind === "credits") {
     return (
@@ -46,11 +46,11 @@ const Arrow: FC<Props> = ({kind}) => {
     )
   }
 
-  if (currentId === 0) {
+  if (currentId === 0 || isNaN(flag.chaos) && isNaN(flag.cred)) {
     return none;
   }
 
-  if (kind === "chaos" && flag.chaos === 0 || kind === "credits" && flag.cred === 0) {
+  if (kind === "chaos" && user.chaos + flag.chaos === user.chaos || kind === "credits" && user.credits + flag.cred === user.credits) {
     return none;
   }
   

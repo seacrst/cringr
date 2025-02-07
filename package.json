@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
+    "chance": "^1.1.12",
     "classnames": "^2.5.1",
     "derive-rust": "^1.0.1",
     "howler": "^2.2.4",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/chance": "^1.1.6",
     "@types/howler": "^2.2.12",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

@@ -52,7 +52,7 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
 
   const less = user.credits + credits?.value! < user.credits;
 
-  const styleCred = (x: number) => user.credits <= x && less && currentId === id;
+  const styleCred = (x: number) => user.credits > 0 && user.credits <= x && less && currentId === id;
 
   return (
     <article onMouseEnter={setCurrent} onMouseLeave={unsetCurrent} className={cn(

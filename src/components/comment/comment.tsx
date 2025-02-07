@@ -8,6 +8,7 @@ import { setNotfication } from "src/store/notification_slice";
 import { selectPost, setPostId } from "src/store/post_slice";
 import { selectUser } from "src/store/user_slice";
 import commmentDisabled from "assets/icons/comment_disabled.svg";
+import { rand } from "src/lib";
 
 interface CommentProps {
   id: number
@@ -19,7 +20,7 @@ const Comment: FC<CommentProps> = ({id}) => {
   const dispatch = useDispatch();
 
   const handleComment = () => {
-    const comment = comments[Math.floor(Math.random() * comments.length)];
+    const comment = comments[rand(0, comments.length - 1)];
 
     dispatch(setPostId(id));
     dispatch(setNotfication({
