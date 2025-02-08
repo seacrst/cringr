@@ -109,7 +109,7 @@ const Notification = () => {
         autoplay: false
       });
       
-      if (!sound.playing()) {
+      if (!sound.playing() && user.chaos < 100) {
         sound.play();
       }
     }
