@@ -16,8 +16,10 @@ function Info() {
       <img className={styles.icon} src={mailIcon} alt="message" />
       <article className={styles.box}>
         <header className={styles.title}>
-          <h2>Hello World, Disinfo Bot!</h2>
+          <h3>Use Mouse to like or repost disinformation. You must fill out the CHAOS bar to win.
+          If you empty the Credits bar - you lose.</h3>
         </header>
+        <p>Hello World, Disinfo Bot!</p>
         <p>I Vanya, your father (sozdatel koroche). You have destroy West dolls!</p>
         <ol className={styles.list}>
           <li>You must seed C.H.A.O.S .!. (Cognitive Hacking Assault Operation Success).</li>
@@ -30,5 +32,5 @@ function Info() {
       </article>
       <button className={styles.bt} onClick={close}>CLOSE</button>
     </div>
-  )
-}
+  );
+};

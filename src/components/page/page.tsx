@@ -11,20 +11,21 @@ import Info from "../info/info";
 import { selectMenu, setInfo } from "src/store/menu_slice";
 import { ElementRef, useEffect, useRef } from "react";
 import { selectModal } from "src/store/notification_slice";
+import Profile from "../profile/profile";
 
 const Page = () => {
   const posts = useSelector(selectPosts);
   const {user} = useSelector(selectUser);
   const dispatch = useDispatch();
   const {open} = useSelector(selectModal);
-  const {info} = useSelector(selectMenu);
+  const {info, profile} = useSelector(selectMenu);
   const {post} = useSelector(selectPost);
 
   const scrollRef = useRef<ElementRef<"div">>(null);
 
   const handleShuffle = () => {
     scrollRef.current?.scrollIntoView({behavior: "smooth"});
-    
+
     dispatch(setCurrentId(0));
     dispatch(setCredits(rand(-25, -15)));
     dispatch(shuffle([user.chaos, post.repostIds]));
@@ -54,7 +55,7 @@ const Page = () => {
     <section className={styles.page}>
       <Notification/>
       {info && <Info/>}
-
+      {profile && <Profile/>}
       <Title/>
       <div  className={styles.posts}>
         <div ref={scrollRef} className={styles.scroll_target}></div>

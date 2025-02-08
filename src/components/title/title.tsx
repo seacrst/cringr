@@ -14,8 +14,8 @@ const Title = () => {
       dispatch(setNotfication({
         open: true,
         type: "failure",
-        title: "Failure",
-        message: "Ran out of likes"
+        title: "GAME OVER! You don't have enough LIKES to play. Next time, check your LIKES number wiser.",
+        message: `at ${new Date().toDateString()} Vanya wrote:\nYou OUT LIKES! You to us didn't like it! RESET!`
       }));
     }
   }, [user]);

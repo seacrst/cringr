@@ -72,6 +72,52 @@ export function genSlice(posts: Post[], chaos: number): Post[] {
   });
 }
 
+export interface Profile {
+  name: string,
+  about: string,
+  ability: string,
+  followers: number | string,
+  joined: number
+}
+
+export const profiles: Profile[] = [
+  {
+    name: "Flat Earther",
+    about: "He think Ground is thin!",
+    ability: "Stable give CHAOS. Seldom his posts ban.",
+    followers: 20,
+    joined: 2016,
+  },
+  {
+    name: "Hype Henry",
+    about: "Brindge Cutter. Like HYPE!",
+    ability: "Give extra likes!",
+    followers: "Max Limit Reached",
+    joined: 2008,
+  },
+  {
+    name: "Doomsday Dennis",
+    about: "Denis prepare for END! He ALARMIST.",
+    ability: "Good for CHAOS. BAD for CREDITS.",
+    followers: 666,
+    joined: 2012,
+  },
+  {
+    name: "Cancel Witch",
+    about: "Witch in short)) No predictable.",
+    ability: "Isterical (((",
+    followers: 1200,
+    joined: 2020,
+  },
+  {
+    name: "Captain Obvious",
+    about: "Simpleton, but gives loans)",
+    ability: "",
+    followers: 1,
+    joined: 2025,
+  }
+];
+
 export const posts2: Array<Partial<Post>> = [
   {
     "id": 1,

@@ -18,13 +18,30 @@
 
 .box {
   font-size: 18px;
-  margin-bottom: 24px;
+  display: flex;
+  padding: 24px;
+  gap: 12px;
+  & img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+  }
+}
+
+.name {
+  font-weight: 700;
+  font-size: 24px;
 }
 
 .title {
   text-align: center;
   margin-bottom: 20px;
   padding: 0 40px;
+}
+
+.extra {
+  padding: 0 24px;
 }
 
 .list {
@@ -34,7 +51,7 @@
 .bt {
   display: block;
   padding: 12px 32px;
-  margin: auto;
+  margin-left: auto;
   border-radius: 12px;
   font-size: 24px;
   background-color: #ccc;

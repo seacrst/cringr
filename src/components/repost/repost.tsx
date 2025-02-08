@@ -5,7 +5,9 @@ import repost_disabled from "assets/icons/repost_disabled.svg";
 import { FC,  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotfication } from "src/store/notification_slice";
-import { selectPost, setPostId } from "src/store/post_slice";
+import { selectPost, setPostId, setRepostId } from "src/store/post_slice";
+import { selectMenu } from "src/store/menu_slice";
+import { setDecreasedLikes } from "src/store/user_slice";
 
 interface Props {
   id: number
@@ -14,15 +16,21 @@ interface Props {
 const Repost: FC<Props> = ({id}) => {
   const dispatch = useDispatch();
   const {post} = useSelector(selectPost);
+  const {repostInfo} = useSelector(selectMenu);
 
   const handleRepost = () => {
-    dispatch(setPostId(id));
-    dispatch(setNotfication({
-      open: true,
-      type: "info",
-      title: "",
-      message: "Reposted posts appear on the next load if you consider them beneficial. However it's cost you 2 Likes"
-    }));
+    if (repostInfo) {
+      dispatch(setRepostId([id]));
+      dispatch(setDecreasedLikes(2));
+    } else {
+      dispatch(setPostId(id));
+      dispatch(setNotfication({
+        open: true,
+        type: "info",
+        title: "Reposted posts appear on the next load if you consider them beneficial",
+        message: "However it's cost you 2 Likes. Reposted posts may not be performing as epic"
+      }));
+    }
   };
 
   return (

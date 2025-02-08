@@ -15,8 +15,8 @@ const Chaos = () => {
       dispatch(setNotfication({
         open: true,
         type: "victory",
-        title: "🎉You Won!",
-        message: "⭐You have a new follower!🤖"
+        title: "🎉Congratulations! You won the session! Follower +1🤖",
+        message: `at ${new Date().toDateString()} Vanya wrote:\n Horosho!) This West dolls must know they location! Take 20 wooden.`
       }));
     }
   }, [user]);

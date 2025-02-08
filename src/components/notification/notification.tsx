@@ -16,6 +16,7 @@ import TypingText from "../typing_text/typing_text";
 import { setMessage, setVisibility } from "src/store/message_slice";
 import { moderates } from "src/parts";
 import { MAX_FAILS } from "src/lib";
+import { setRepostInfo } from "src/store/menu_slice";
 
 const Notification = () => {
   const { open, message, title, type } = useSelector(selectModal);
@@ -62,7 +63,8 @@ const Notification = () => {
   const confirmInfo = () => {
     dispatch(setInitialNotification());
     dispatch(setRepostId([post.postId]));
-    dispatch(setDecreasedLikes(2))
+    dispatch(setDecreasedLikes(2));
+    dispatch(setRepostInfo(true));
   };
 
   useEffect(() => {
@@ -124,7 +126,7 @@ const Notification = () => {
       {type === "comment" ? <img className={styles.bell} src={commentIcon} alt="comment" /> : <img className={styles.bell} src={bell} alt="bell" />}
       <div className={cn(styles.textBox, {[styles.commentBox]: type === "comment"})}>
         <p className={styles.title}>{title}</p>
-        {type !== "comment" && <p className={styles.msg}>{message}</p>}
+        {type !== "comment" && <p className={cn(styles.msg, {[styles.text_left]: type === "victory" || type === "failure"})}>{message}</p>}
         {typingText && type === "comment" && <TypingText text={message} onComplete={() => {if (sendRef.current) sendRef.current.disabled = false}} />}
       </div>
       {type !== "victory" && type !== "failure" && <span className={styles.x} onClick={handleClose}>&times;</span>}

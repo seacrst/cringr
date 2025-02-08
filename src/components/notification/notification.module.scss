@@ -22,6 +22,11 @@
   }
 }
 
+.text_left {
+  text-align: left;
+  padding-left: 24px;
+}
+
 .modal {
   border: 2px solid #000;
   box-shadow: 0 0 12px #717171;
@@ -44,7 +49,10 @@
 }
 
 .title {
-  font-size: 26px;
+  padding: 0 16px;
+  font-weight: 500;
+  font-size: 20px;
+  word-wrap: balance;
 }
 
 .msg {

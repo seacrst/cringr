@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./post.module.scss";
 import { Post as PostItem } from "src/parts";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPost, setCurrentId } from "src/store/post_slice";
+import { selectPost, setCurrentId, setPostId } from "src/store/post_slice";
 import Like from "../like/like";
 import Comment from "../comment/comment";
 import Repost from "../repost/repost";
@@ -19,6 +19,7 @@ import { names } from "src/lib";
 import { selectModal } from "src/store/notification_slice";
 import cn from "classnames"
 import { selectUser } from "src/store/user_slice";
+import { setProfile } from "src/store/menu_slice";
 
 const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, credits, reposted}) => {
   const dispatch = useDispatch();
@@ -54,22 +55,26 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
 
   const styleCred = (x: number) => user.credits > 0 && user.credits <= x && less && currentId === id;
 
+  const openProfile = () => {
+    dispatch(setProfile(true));
+    dispatch(setPostId(id!));
+  };
+
   return (
     <article onMouseEnter={setCurrent} onMouseLeave={unsetCurrent} className={cn(
       styles.post, 
-      {[styles.active] : currentId === id}, 
+      {[styles.active] : currentId === id},
       {[styles.pulseCred1]: styleCred(20)},
       {[styles.pulseCred2]: styleCred(10)},
       {[styles.pulseCred3]: styleCred(5)},
       )} onClick={setCurrent}>
-
       {mId === id && <Message id={id || 0} />}
-      <header className={styles.character}>
+      <header className={styles.character} onClick={openProfile}>
         <img className={styles.pic} src={pic} alt="character" />
         <span className={styles.username}>{character}</span>
       </header>
       
-      <div className={styles.text}>
+      <div className={styles.text} onClick={openProfile}>
         <p>{content}</p>
         <footer className={styles.tags}>
           <span>{hashTags}</span>

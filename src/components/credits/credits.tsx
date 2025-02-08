@@ -16,8 +16,8 @@ const Credits = () => {
       dispatch(setNotfication({
         open: true,
         type: "failure",
-        title: "Failure!",
-        message: "You lost all the credits"
+        title: "GAME OVER! You don't have enough CREDITS to play. Next time, check your CREDITS bar wiser",
+        message: `at ${new Date().toDateString()} Vanya wrote:\nYou no watch for Credits! Your curator in disorder :(((((((( You be RESETED!111`
       }));
       dispatch(addFail());
     }

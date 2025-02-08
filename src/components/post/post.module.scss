@@ -35,11 +35,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 
 .text {
   padding: 10px 0;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .reposted {
