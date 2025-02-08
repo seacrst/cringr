@@ -16,7 +16,8 @@ interface PostState {
     repostIds: Array<number>,
     commentsIds: Array<number>,
     postId: number,
-    liked: number
+    liked: number,
+    likedIds: number[],
   },
   credits: {
     loseHint: boolean
@@ -29,7 +30,8 @@ const initialPostState: PostState = {
     repostIds: [],
     commentsIds: [],
     postId: 0,
-    liked: 0
+    liked: 0,
+    likedIds: []
   },
   credits: {
     loseHint: false
@@ -51,6 +53,12 @@ export const postSlice = createSlice({
     },
     setRepostId(state, action: PayloadAction<Array<number>>) {
       state.post.repostIds = [...state.post.repostIds, ...action.payload];
+    },
+    addLikedIds(state, action: PayloadAction<Array<number>>) {
+      state.post.likedIds = [...state.post.likedIds, ...action.payload];
+    },
+    setLikedIds(state, action: PayloadAction<Array<number>>) {
+      state.post.likedIds = action.payload;
     },
     resetRepostedId(state) {
       state.post.repostIds = [];
@@ -74,7 +82,8 @@ export const postSlice = createSlice({
         repostIds: [],
         commentsIds: [],
         postId: 0,
-        liked: 0
+        liked: 0,
+        likedIds: []
       };
     }
   }
@@ -160,7 +169,9 @@ export const {
   resetCommented,
   setRepostId,
   resetRepostedId,
-  setLikedId
+  setLikedId,
+  addLikedIds,
+  setLikedIds
 } = postSlice.actions;
 
 export const {shuffle, setInitialPosts, setReposted} = postsSlice.actions;

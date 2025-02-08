@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../post/post";
 import styles from "./page.module.scss";
-import { resetCommented, resetRepostedId, selectPost, selectPosts, setCredLoseHint, setCurrentId, shuffle } from "src/store/post_slice";
+import { resetCommented, resetRepostedId, selectPost, selectPosts, setCredLoseHint, setCurrentId, setLikedIds, shuffle } from "src/store/post_slice";
 import Notification from "components/notification/notification"
 import Title from "../title/title";
 import { selectUser, setCredits, setShuffled } from "src/store/user_slice";
@@ -32,6 +32,7 @@ const Page = () => {
     dispatch(resetRepostedId());
     dispatch(resetCommented());
     dispatch(setShuffled(true));
+    dispatch(setLikedIds([]));
   };
 
   const hover = () => {

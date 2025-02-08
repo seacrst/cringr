@@ -6,6 +6,7 @@ import notify from "assets/audio/output.mp3";
 import {Howl} from "howler";
 
 import { FC, useEffect, useState } from "react";
+import { MODERATION_MESSAGE_TIMER_MILLISECS } from "src/lib";
 
 interface Props {
   id: number
@@ -24,7 +25,7 @@ const Message: FC<Props> = ({id}) => {
 
       const t2 = setTimeout(() => {
         dispatch(setVisibility([false, id]))
-      }, 4200);
+      }, MODERATION_MESSAGE_TIMER_MILLISECS);
       return () => {
         clearTimeout(t1);
         clearTimeout(t2);

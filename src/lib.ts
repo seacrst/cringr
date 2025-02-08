@@ -6,6 +6,7 @@ const MIN: number = 3;
 const MAX: number = 5;
 export const COMMENT_TYPING_SPEED: number = 30;
 export const MAX_FAILS: number = 3;
+export const MODERATION_MESSAGE_TIMER_MILLISECS: number = 4500;
 
 export const names = [
   "Flat Earther",

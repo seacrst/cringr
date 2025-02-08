@@ -34,7 +34,7 @@ const Repost: FC<Props> = ({id}) => {
   };
 
   return (
-    <button disabled={post.repostIds.includes(id) || post.liked !== id} onClick={handleRepost} className={styles.repost}>
+    <button disabled={post.repostIds.includes(id) || !post.likedIds.includes(id)} onClick={handleRepost} className={styles.repost}>
       {post.liked !== id ? <img src={repost_disabled} alt="repost" /> : post.repostIds.includes(id) ? <img src={repostedIcon} alt="repost"/> : <img src={repostIcon} alt="repost" />  }
       REPOST
     </button>

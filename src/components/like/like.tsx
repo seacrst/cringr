@@ -8,7 +8,7 @@ import { Howl } from "howler";
 import { setMessage, setVisibility } from "src/store/message_slice";
 import { decreaseLikes, selectUser, setChaos, setCredits, setStreak } from "src/store/user_slice";
 import { moderates } from "src/parts";
-import { selectPosts, setLikedId } from "src/store/post_slice";
+import { addLikedIds, selectPosts, setLikedId } from "src/store/post_slice";
 
 interface Props {
   id: number
@@ -40,6 +40,7 @@ const Like: FC<Props> = ({chaos, credits, id}) => {
     
     setLike(true);
     dispatch(setLikedId(id));
+    dispatch(addLikedIds([id]));
 
     const g = moderates.green.find(m => credits >= m.inChange[0] && credits <= m.inChange[1]);
     const r = moderates.red.find(m => chaos >= m.inChange[0] && chaos <= m.inChange[1]);
