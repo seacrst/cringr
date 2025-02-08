@@ -42,7 +42,7 @@ const Like: FC<Props> = ({chaos, credits, id}) => {
     dispatch(setLikedId(id));
 
     const g = moderates.green.find(m => credits >= m.inChange[0] && credits <= m.inChange[1]);
-    const r = moderates.red.find(m => chaos >= m.inChange[0] && chaos >= m.inChange[1]);
+    const r = moderates.red.find(m => chaos >= m.inChange[0] && chaos <= m.inChange[1]);
     const m = Math.abs(chaos) >= Math.abs(credits) ? r : g;
 
     dispatch(setMessage([m?.message ?? "", m?.type === "chaos" ? "red" : "green"]))

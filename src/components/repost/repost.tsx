@@ -28,7 +28,7 @@ const Repost: FC<Props> = ({id}) => {
         open: true,
         type: "info",
         title: "Reposted posts appear on the next load if you consider them beneficial",
-        message: "However it's cost you 2 Likes. Reposted posts may not be performing as epic"
+        message: "However it'll cost you 2 Likes. Reposted posts may not be performing as epic"
       }));
     }
   };

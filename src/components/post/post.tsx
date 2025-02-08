@@ -74,7 +74,7 @@ const Post: FC<Partial<PostItem>> = ({id, content, hashTags, character, chaos, c
         <span className={styles.username}>{character}</span>
       </header>
       
-      <div className={styles.text} onClick={openProfile}>
+      <div className={styles.text}>
         <p>{content}</p>
         <footer className={styles.tags}>
           <span>{hashTags}</span>

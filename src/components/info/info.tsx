@@ -20,7 +20,7 @@ function Info() {
           If you empty the Credits bar - you lose.</h3>
         </header>
         <p>Hello World, Disinfo Bot!</p>
-        <p>I Vanya, your father (sozdatel koroche). You have destroy West dolls!</p>
+        <p>I Vanya, your father. You have destroy West dolls!</p>
         <ol className={styles.list}>
           <li>You must seed C.H.A.O.S .!. (Cognitive Hacking Assault Operation Success).</li>
           <li>SO make it you have LIKE disinfo POSTS! (It is this for because we made you!111).</li>

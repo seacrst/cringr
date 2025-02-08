@@ -90,7 +90,7 @@ export const profiles: Profile[] = [
   },
   {
     name: "Hype Henry",
-    about: "Brindge Cutter. Like HYPE!",
+    about: "Bridge Cutter. Like HYPE!",
     ability: "Give extra likes!",
     followers: "Max Limit Reached",
     joined: 2008,
