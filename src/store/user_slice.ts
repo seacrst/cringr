@@ -37,9 +37,19 @@ export const userSlice = createSlice({
       state.user.likes += 1
     },
     decreaseLikes(state) {
+      if (state.user.likes - 1 <= 0) {
+        state.user.likes = 0;
+        return state;
+      }
+      
       state.user.likes -= 1
     },
     setDecreasedLikes(state, action: PayloadAction<number>) {
+      if (state.user.likes - action.payload <= 0) {
+        state.user.likes = 0;
+        return state;
+      }
+      
       state.user.likes -= action.payload;
     },
     increaseLike(state, action: PayloadAction<number>) {

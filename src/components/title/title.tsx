@@ -10,7 +10,7 @@ const Title = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.likes === 0) {
+    if (user.likes <= 0) {
       dispatch(setNotfication({
         open: true,
         type: "failure",
